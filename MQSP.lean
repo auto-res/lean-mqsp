@@ -26,3 +26,7 @@ import MQSP.Module.Compare
 import MQSP.Modules.Chain
 import MQSP.Poly.Basic
 import MQSP.QSVT.RealPoly
+import MQSP.Clock.Flat
+import MQSP.Compose.Substitute
+import MQSP.QSVT.Module
+import MQSP.Compile.Endpoint

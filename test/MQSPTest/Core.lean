@@ -83,3 +83,17 @@ info: 'MQSP.Junction.norm_steady_sub_steady_le' depends on axioms: [propext, Cla
 -/
 #guard_msgs in
 #print axioms MQSP.Junction.norm_steady_sub_steady_le
+
+/-- info: 'MQSP.Junction.subst_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.subst_steady
+
+/-- info: 'MQSP.QSVT.qsp_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.qsp_steady
+
+/--
+info: 'MQSP.Junction.ChainData.isEncodingOf_chain_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Junction.ChainData.isEncodingOf_chain_endpoint
