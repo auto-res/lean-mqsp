@@ -97,3 +97,13 @@ info: 'MQSP.Junction.ChainData.isEncodingOf_chain_endpoint' depends on axioms: [
 -/
 #guard_msgs in
 #print axioms MQSP.Junction.ChainData.isEncodingOf_chain_endpoint
+
+/--
+info: 'MQSP.Spectral.norm_polyCalc_sub_cfc_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Spectral.norm_polyCalc_sub_cfc_le
+
+/-- info: 'MQSP.Poly.exists_amplifier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Poly.exists_amplifier

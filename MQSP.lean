@@ -30,3 +30,5 @@ import MQSP.Clock.Flat
 import MQSP.Compose.Substitute
 import MQSP.QSVT.Module
 import MQSP.Compile.Endpoint
+import MQSP.Core.Spectral
+import MQSP.Poly.Approx
