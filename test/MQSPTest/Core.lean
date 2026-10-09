@@ -157,3 +157,13 @@ info: 'MQSP.QSVT.exists_phases_proj_average_proj_odd' depends on axioms: [propex
 /-- info: 'MQSP.Resource.sq_sum_sqrt_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms MQSP.Resource.sq_sum_sqrt_le
+
+/-- info: 'MQSP.Junction.ap1_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.ap1_steady
+
+/--
+info: 'MQSP.Signals.isEncodingOf_prepQuery' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Signals.isEncodingOf_prepQuery

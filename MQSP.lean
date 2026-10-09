@@ -51,3 +51,5 @@ import MQSP.QSP.Perturb
 import MQSP.Resource.Allocation
 import MQSP.QSVT.Synthesis
 import MQSP.Resource.Hybrid
+import MQSP.Modules.PrepQuery
+import MQSP.Modules.AP1
