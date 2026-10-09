@@ -71,3 +71,15 @@ info: 'MQSP.Junction.norm_G_le_of_partial_bound' depends on axioms: [propext, Cl
 -/
 #guard_msgs in
 #print axioms MQSP.Junction.norm_G_le_of_partial_bound
+
+/--
+info: 'MQSP.Junction.ChainData.steady_eq_circuit' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Junction.ChainData.steady_eq_circuit
+
+/--
+info: 'MQSP.Junction.norm_steady_sub_steady_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Junction.norm_steady_sub_steady_le
