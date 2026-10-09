@@ -139,3 +139,13 @@ info: 'MQSP.QSVT.norm_average_sub_cfc_le_odd' depends on axioms: [propext, Class
 /-- info: 'MQSP.CPE.readout_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms MQSP.CPE.readout_one
+
+/-- info: 'MQSP.QSVT.exists_phases' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.exists_phases
+
+/--
+info: 'MQSP.QSVT.exists_phases_proj_average_proj_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.QSVT.exists_phases_proj_average_proj_odd

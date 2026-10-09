@@ -45,3 +45,6 @@ import MQSP.Resource.Approx
 import MQSP.CPE.Estimator
 import MQSP.Lang.Info
 import MQSP.CPE.Readout
+import MQSP.QSVT.Phases
+import MQSP.QSP.Endpoints
+import MQSP.QSP.Perturb
