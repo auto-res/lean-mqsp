@@ -71,6 +71,8 @@ the theorem inventories of the three papers are `dev/inventory/*.md`, the dated 
 - Never define a notation of the form `p "[" … "]"`: it clashes with array indexing `xs[i]!`.
 - `evalExpr` is unsafe; meta code that inspects programs (`#mqsp_info`) walks the `Expr` and
   counts `Sum`/`Fin`/`Unit` index types structurally instead of evaluating.
+- `DSum.mk` is a reducible abbreviation, so `rw [DSum.fst_mk]`/`snd_mk` can match any `fst v`;
+  use typed `have h : DSum.snd (…) = l := congrArg DSum.snd hv` instead of blind `rw`.
 - Rall's rounding promise must use the rounding convention for bits
   (`⌊x·2^(k+1) + 1/2⌋ % 2`); the floor convention is inconsistent with the promise.
 

@@ -167,3 +167,7 @@ info: 'MQSP.Signals.isEncodingOf_prepQuery' depends on axioms: [propext, Classic
 -/
 #guard_msgs in
 #print axioms MQSP.Signals.isEncodingOf_prepQuery
+
+/-- info: 'MQSP.Junction.close_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.close_steady
