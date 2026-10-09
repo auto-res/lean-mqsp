@@ -20,3 +20,5 @@ import MQSP.Modules.Cayley
 import MQSP.QSVT.Core
 import MQSP.Modules.Signals
 import MQSP.Clock.Analytic
+import MQSP.Resource.Cost
+import MQSP.Compose.Project
