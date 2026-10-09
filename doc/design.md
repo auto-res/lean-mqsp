@@ -1,4 +1,4 @@
-# lean-mqsp 言語設計 (v1)
+# lean-mqsp 言語設計 (v2)
 
 mQSP (Low, arXiv:2610.01125) を出発点に，量子アルゴリズムを operator-level で記述し，
 Lean 4 で正しさ・近似誤差・oracle ごとのクエリ複雑さを合成的に証明するための
@@ -53,6 +53,11 @@ structure Junction (P L) (K : ι → Type) : -- MOD-1
   S : P ⊕ₕ L →L[ℂ] P ⊕ₕ L ; isUnitary_S ; ports : Ports L K ; delay : ι → ℕ ; 1 ≤ delay j
 ```
 
+実装上の注記（v2）: 定常状態は regular（`1 − DQ` 可逆）版 `catalyst/steady` に加えて，
+**regular 仮定なしの最小ノルム版** `catalyst₀/steady₀`（`Module/Steady.lean`）を持つ．有限次元で `S`, `Q` が
+ユニタリなら `ran C ⊆ ran(1 − DQ)` が成り立ち，定常解は常に存在し，`steady₀` は常にユニタリである
+（調査 `dev/inventory/mqsp-core.md` §5.2 G2 の指摘）．regular なら両者は一致する．
+
 - `ι` はポートの添字（有限型），`K j` は port `j` の oracle 空間．同じ oracle を異なるレートで
   問い合わせる場合は別ポートにする．ポートの「コピー」(`Icopy ⊗ Oⱼ`) はアドレス付き直和であり
   1 回の制御付き呼び出しなので，`K j` の中に含めてよい（クエリ数はポート呼び出しで数える）．
@@ -71,7 +76,7 @@ structure Junction (P L) (K : ι → Type) : -- MOD-1
 - この層が「理想的な module の正しさ」を担う: 例えば `HamSim t (Be H λ)` の steady value が
   `e^{-itH}` であること．
 
-### 3.2 層 (ii): impulse response（時間領域；MOD-3，予定）
+### 3.2 層 (ii): impulse response（時間領域；MOD-3，`Module/Impulse.lean`）
 
 - unit delay の再帰 (mQSP Eq. 2.20): `y_k = A u_k + B O g_{k−1}`, `g_k = C u_k + D O g_{k−1}`，
   一般の遅延は port `j` の読み出しが `k − r_j` 時刻の書き込み（1 回の oracle 呼び出し後）になる．
@@ -80,7 +85,7 @@ structure Junction (P L) (K : ι → Type) : -- MOD-1
   `G_n = Σ_{⟨r,m⟩=n} F_m`．生成関数 `F(z;O)`, `G(z) = Σ G_n zⁿ` は解析層でのみ使う．
 - 群遅延作用素 `W = G† G′ = Σ_j r_j Γ_j†Γ_j`（Eq. 1.13/2.13）は (i) の量で表せる．
 
-### 3.3 層 (iii): compile（COMP-C，予定）
+### 3.3 層 (iii): compile（COMP-C，`Compile/Lift.lean`, `Compile/Clock.lean`, `Compile/Endpoint.lean`）
 
 - **回路 IR**: 時刻付きの既知ユニタリと「ポート `j` への制御付き呼び出し」の列．
   クエリ数 `q_j` は IR 上の計算可能な関数．
@@ -95,7 +100,13 @@ structure Junction (P L) (K : ι → Type) : -- MOD-1
 - 結果の形: 「プログラム `p` と horizon/clock パラメータから，`Be[G̃_N/α]` を実装する有限回路と
   クエリ数 `q_j` が得られる」が定理になる．
 
-### 3.4 層 (iv): approximation と resource（CLK-*, RES-*，予定）
+### 3.4 層 (iv): approximation と resource（CLK-*, RES-*；`Clock/`, `Resource/`）
+
+実装済み（v2）: transient 恒等式と S1（`Clock/Transient.lean`），箱型 clock（`Clock/Flat.lean`），
+uniform clock の end-to-end 定理 `isEncodingOf_uniform`（mQSP Thm 3.2: 誤差 `‖Γ‖/√N`，正規化 1；`Clock/Uniform.lean`），
+生成関数と Cauchy 裾評価（`Clock/Analytic.lean`），資源勘定（`Resource/Cost.lean`），
+正規化・条件付き状態・OAA（`Resource/Approx.lean`），重み付き遅延配分（`Resource/Allocation.lean`）．
+解析的 clock shaping（Thm 3.9）は未着手．
 
 - transient 恒等式 (Eq. 1.12): `G†(G − G̃_N) = (1−c₀) I + Σ (c_n − c_{n+1}) K_n`，
   `K_n = G†(G − Σ_{k≤n} G_k)`．
@@ -121,7 +132,9 @@ structure Junction (P L) (K : ι → Type) : -- MOD-1
 | Inverse | 同じ | `S†`，oracle `O†` | `F†` |
 | Project（Π_in, Π_out） | block encoding の抽出 | — | `Π_out F Π_in` |
 
-各規則について層 (i)–(iv) の合成定理を証明する．Series は COMP-2（`MQSP/Compose/Series.lean`）．
+各規則について層 (i)–(iv) の合成定理を証明する．v2 時点で Series / Wire / DirectSum / Spectator / Inverse /
+Substitute / Delay / Project(LCU) の層 (i) の合成定理（定常値・catalyst・重み）が証明済み（`MQSP/Compose/`）．
+Close は未着手（Substitute と WeightedCayley の内部で必要な分は個別に証明）．
 
 ---
 
@@ -145,22 +158,24 @@ QSVT の位相列 `Φ` に対する module は `qsp Φ U := Series_k (Wire (e^{i
 
 ---
 
-## 6. 表面言語（`MQSP.Lang`，予定）
+## 6. 表面言語（`MQSP.Lang`，実装済み v2）
 
 ```
-inductive Prog : (P : Type) → Type   -- public 空間で型付け
-| junction (M : Junction P L K)          -- 生の primitive（Prop 5.1）
-| query (j)                              -- zO_j
-| wire (V) (p) | series (p q) | dsum (p q) | spectator (N) (p)
-| close (E) (V) (p) | subst (j) (p q) | delay (r) (p) | inverse (p) | project (Π_in Π_out) (p)
-| cayley | exp τ | hamSim t | fpaa | sign L | ...   -- library modules
+inductive Prog : (P : Type u) → [HSpace P] → PortFamily → Type (u+1)
+| prim (M : Junction P L pf.K)                 -- 生の primitive（Prop 5.1）；library modules はここから
+| series (p : Prog P pf₁) (q : Prog P pf₂) : Prog P (pf₁.sum pf₂)          -- p ;; q
+| wireBefore / wireAfter (V) (hV) (p)                                      -- V ◁[hV] p, p ▷[hV] V
+| dsum (p : Prog P₁ pf₁) (q : Prog P₂ pf₂) : Prog (P₁ ⊕ₕ P₂) (pf₁.sum pf₂)  -- p ⊕ₚ q
+| spectator (n) (p) : Prog (Reg n P) (pf.reg n)
+| inverse (p)
+| subst (p : Prog P pf) (j : pf.ι) (q : Prog (pf.K j) pf') : Prog P (pf.sum pf')  -- p ⇐[j] q
 ```
 
-`denote : Prog P → Junction P (priv p) (ports p)`（private 空間とポート型はプログラムから計算），
-`cost : Prog → (ports → ℕ)`（catalyst weight の上界・lift のクエリ数），
-`compile : Prog → horizon → clock → Circuit`．表面記法と `#mqsp_info`（クエリ数・次元・誤差）を提供する．
-ユーザーは `hamSim t |> project Π Π` のように書き，`denote` の定理
-（`steady = e^{−itH}`，`queries = ⌊(N−1)/r⌋`，`‖G̃_N − F‖ ≤ ε`）を得る．
+プログラムは public 空間とポート族 `pf`（露出 oracle ポートの添字型と各ポート空間）で型付けされ，
+private 空間は `denote : Prog P pf → Den P pf` が計算する（Σ 型）．`steady/weight/G/lift/queries` は `denote` 経由で定義され，
+接続規則ごとの合成的意味論（`steady_series` など）と end-to-end の compile 定理（`Prog.isEncodingOf_uniform`）を持つ．
+`describe`/`numPorts` は計算可能，`#mqsp_info p` はネットワーク構造とポート数を表示する（`Lang/Info.lean`）．
+library modules: `query`, `cayley`, `chain`（有限 query 回路；QSP 位相列は `QSVT.qsp`）．
 
 ---
 
@@ -193,7 +208,8 @@ inductive Prog : (P : Type) → Type   -- public 空間で型付け
 - **ポートの抽象化**（`Ports`）により接続規則の private 空間が自然な直和になる．
 - **regularity は単射性**（有限次元）で合成し，catalyst は不動点方程式の一意解として特徴付ける．
   これで Series/Substitute/Close の catalyst 公式が「候補を代入して検証」で証明できる．
-- **impulse response と lift は時変系列（causal lift）で一般化**し，Toeplitz は定数系列の系とする．
+- **impulse response と lift** は時刻付きの埋め込み `J k`（clock `|k⟩`，slot `k mod rⱼ`）と周期スケジュールで定義し，
+  Toeplitz ブロックは時刻帰納法で証明した（時変系列への一般化は将来課題）．
 - **clock は明示的因数分解を入力**とし，SVD/核ノルムの存在定理に依存しない．
 - **解析層は係数列の評価に還元**し，複素解析（Cauchy 評価）は 1 箇所に隔離する．
 - **oracle promise は述語**で，定理は `∀ O, promise O → …` の形；promise の合成（Series の左右の

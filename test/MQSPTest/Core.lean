@@ -121,3 +121,57 @@ info: 'MQSP.Junction.CayleyData.steady_eq' depends on axioms: [propext, Classica
 -/
 #guard_msgs in
 #print axioms MQSP.Junction.CayleyData.steady_eq
+
+/-- info: 'MQSP.Junction.hamSim_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.hamSim_steady
+
+/--
+info: 'MQSP.QSVT.norm_average_sub_cfc_le_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.QSVT.norm_average_sub_cfc_le_odd
+
+/-- info: 'MQSP.Resource.oaa_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Resource.oaa_block
+
+/-- info: 'MQSP.CPE.readout_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.CPE.readout_one
+
+/-- info: 'MQSP.QSVT.exists_phases' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.exists_phases
+
+/--
+info: 'MQSP.QSVT.exists_phases_proj_average_proj_odd' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.QSVT.exists_phases_proj_average_proj_odd
+
+/-- info: 'MQSP.QSVT.exists_qsvt_approx_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.exists_qsvt_approx_odd
+
+/-- info: 'MQSP.Resource.sq_sum_sqrt_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Resource.sq_sum_sqrt_le
+
+/-- info: 'MQSP.Junction.ap1_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.ap1_steady
+
+/--
+info: 'MQSP.Signals.isEncodingOf_prepQuery' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Signals.isEncodingOf_prepQuery
+
+/-- info: 'MQSP.Junction.close_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.close_steady
+
+/-- info: 'MQSP.Junction.fpaa_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.fpaa_steady

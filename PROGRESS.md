@@ -3,6 +3,29 @@
 進捗ログ（新しいものを上に）．計画は [dev/plan.md](dev/plan.md)，設計は [doc/design.md](doc/design.md)，
 仕様 ID は [dev/formal-spec.md](dev/formal-spec.md)，論文調査は [dev/inventory/](dev/inventory/) を参照．
 
+## 2026-10-10 (4) — M4: QSP 位相の存在，synthesis 定理，CPE 読み出し，資源層，言語の仕上げ
+
+- **QSP 位相の存在（`MQSP/QSP/`，`QSVT/Phases.lean`）**: lean-qsvt（同著者，MIT）から QSP 構造定理・相補多項式
+  （GSLW Thm 3–5，Lemma 6）・存在定理を port し，本リポジトリの 2 ブロック規約への橋渡し（`qspPoly_reverse`：
+  本規約の位相列はリストの反転で反射規約に一致）を証明．**`exists_phases`**（Cor 10）: parity 付き・`[−1,1]` で有界な
+  実多項式は長さ `n ≥ 1` の位相列で `Re P_Φ` として実現できる（`n = 0` は反例があり仮定 `1 ≤ n` が必要）．
+- **synthesis（`QSVT/Synthesis.lean`）**: Weierstrass 近似 → 位相存在 → QSVT 定理 → spectral mapping を繋ぎ，
+  `exists_qsvt_approx_odd`: Hermitian な符号化と連続奇関数 `f` に対し `‖Pr (U_Φ+U_{−Φ})/2 Pr − f(A)‖ ≤ ε` となる位相列が存在．
+- **Hermitian QSVT（`QSVT/Hermitian.lean`）**: `Pr U_Φ Pr = P_Φ(A)`（多項式汎関数計算），近似定理 `norm_average_sub_cfc_le_odd`．
+- **HamSim（`Algorithms/HamSim.lean`）**: 仕様 `IsExpModule` と WeightedCayley の代入で理想定常値 `exp(−τM)`（`hamSim_steady`），
+  遅延によるポートごとのクエリ数（`hamSim_queries`）．
+- **CPE**: 推定器仕様（rounding promise は Rall の丸め規約に修正：床ビットでは偽），`cos²` によるビット分離，
+  固有空間上の 1 ビット抽出（`bit_extraction`），**読み出し補題**（`readout_zero/one`：答え qubit が `|±⟩` に収束，データは不変）．
+- **資源層**: 正規化の付け替え（Lemma A.2），条件付き状態（Lemma A.3），**OAA のブロック恒等式**（Lemma A.4，Eq A.9）と誤差，
+  重み付き遅延配分（Lemma 3.12 の Cauchy–Schwarz 形，Eq 1.18）．
+- **言語**: `withDelay` 構成子，`#mqsp_info`（ネットワーク構造とポート数を表示），例プログラム（`Lang/Examples.lean`：
+  Cayley の 2 段直列，QSP chain，入れ子代入，HamSim ネットワーク），program-level の end-to-end compile 定理．
+- **追加（M4 末）**: Close 規則（§5.2 の接続規則が揃った），AP1（Blaschke），FPAA tap（定常値 1，catalyst，重み），
+  PreparationQuery，hybrid argument．FPAA の有限 N 残差評価は under-damped 条件が必要（無条件の主張は偽；反例を記録）．
+- 規模: Lean 約 13,500 行，`lake build`/`lake test` 成功，公理は標準 3 つ，sorry なし．
+- 未着手/今後: 解析的 clock shaping（Thm 3.9，対数精度），Close 規則，FPAA の有限 N 残差評価（Schur 形），
+  CPE Thm 12 の反復全体（Δ 依存位相配線），時変 causal lift（Prop 8.1），Exp の有限 Schur 実現（Thm 5.6）．
+
 ## 2026-10-10 (3) — M3: QSVT 定理，言語層，uniform clock の end-to-end，CPE primitive
 
 - **QSVT（`MQSP/QSVT/`）**: SVD を使わない 2 ブロック漸化式（`Shape`）で **GSLW Thm 17**（`proj_UΦ_proj_odd/even`），
