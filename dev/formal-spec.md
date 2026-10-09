@@ -62,16 +62,17 @@
 ## RES（`MQSP/Resource`，mQSP Def A.1，App A）
 
 - RES-1. `CostModel`（ポート→oracle 型，コスト），`weightedCost`，`invocations` — `Resource/Cost.lean` ✅
-- RES-2. 正規化と近似誤差（Lemma A.2），条件付き状態（Lemma A.3），OAA（Lemma A.4），誤差予算 (A.13) — ⬜
+- RES-2. 正規化と近似誤差（Lemma A.2），条件付き状態（Lemma A.3），OAA のブロック恒等式と誤差（Lemma A.4） — `Resource/Approx.lean` ✅；誤差予算 (A.13) — ⬜
+- RES-3. 重み付き遅延配分（Lemma 3.12 の Cauchy–Schwarz 形，Eq 1.18） — `Resource/Allocation.lean` ✅
 
 ## LIB（`MQSP/Modules`，mQSP §5.1/5.3）
 
 - LIB-0. chain junction（有限 query 回路 = module；`D` 冪零，steady = 回路，`G` は遅延 `d` に集中，重み 1/port） — `Modules/Chain.lean` ✅
 - LIB-1. Query（`F = O`） — `Modules/Query.lean` ✅；Cayley（Eq 1.24/5.35，`F = (1−iA)(1+iA)⁻¹`，重み `2/(1+x²)`） — `Modules/Cayley.lean` ✅；WeightedCayley（Lemma 5.2，`CayleyData.steady_eq`） — `Modules/WeightedCayley.lean` ✅；AP1 — ⬜
 - LIB-2. ReflectionWalk (5.13)，HermitianDilation (5.12) — `Modules/Signals.lean` ✅；PreparationQuery (5.14) — ⬜
-- LIB-3. FPAA tap (1.38)/(5.24)，Prop 5.3；OAA（Cor 5.4） — ⬜
+- LIB-3. FPAA tap (1.38): 定常値 1，catalyst (1.39)，重み — `Algorithms/FPAA.lean` 🔶；有限 N 残差評価 (1.42a) — ⬜；AP1（Blaschke，Eq 4.66–4.70） — `Modules/AP1.lean` 🔶
 - LIB-4. Sign lattice (5.27)–(5.30)，Threshold (5.33) — ⬜
-- LIB-5. Exp の仕様 `IsExpModule`（steady = `exp(−τ(1−W)(1+W)⁻¹)`）と HamSim = Exp[WeightedCayley] の理想定常値 `exp(−τM)` — `Algorithms/HamSim.lean` 🔶；有限 Schur 実現（Thm 5.6 (i)），Prop 5.5 — ⬜
+- LIB-5. Exp の仕様 `IsExpModule` と HamSim = Exp[WeightedCayley] の理想定常値 `exp(−τM)`（`hamSim_steady`），クエリ数 — `Algorithms/HamSim.lean` ✅；有限 Schur 実現（Thm 5.6 (i)），Prop 5.5 — ⬜
 - LIB-6. Reciprocal（Lemma 5.7），StatePrep（Cor 5.8） — ⬜
 
 ## ALG（`MQSP/Algorithms`，mQSP §6）
@@ -84,23 +85,23 @@
 ## QSVT（`MQSP/QSVT`，GSLW）
 
 - QSVT-1. 位相列 module `qsp` = chain junction（位相作用素と `U, U†` の交互），steady = `U_Φ`，重み 1/port — `QSVT/Module.lean` ✅
-- QSVT-2. QSP 構造定理（Thm 3/4，Cor 8/10，Lemma 9），相補多項式（Thm 5，Lemma 6）: `exists_phases`（lean-qsvt からの port） — `QSP/`, `QSVT/Phases.lean` 🔶（進行中）
+- QSVT-2. QSP 構造定理（Thm 3/4，Cor 8/10，Lemma 9），相補多項式（Thm 5，Lemma 6）: **`exists_phases`**（`1 ≤ n`），scalar 橋渡し `qspPoly_reverse`，Chebyshev 位相，摂動 — `QSP/*`, `QSVT/Phases.lean` ✅（lean-qsvt からの port）
 - QSVT-3. **QSVT 定理**（Thm 17）: 2 ブロック漸化式 `Shape`，`proj_UΦ_proj_odd/even`（`A p_Φ(A†A)` / `Π p_Φ(A†A) Π`，SVD なし），
   `pqΦ_neg`（Cor 18 の共役），次数評価 — `QSVT/Core.lean` ✅；Cor 18 の LCU 形 — `QSVT/RealPoly.lean` ✅；endpoint clock での compile — `Compile/Endpoint.lean` ✅
 - QSVT-4. block-encoding 算術: Lemma 52（LCU），Lemma 53（積），Lemma 54（テンソル），Cor 55，Thm 56 — ⬜
 - QSVT-5. 摂動（Lemma 22/23，Thm 73）＝ query-Lipschitz（mQSP (2.14) の回路版） — ⬜
-- QSVT-6. 応用（Thm 27 FPAA，Thm 28 OAA，Thm 30/31 閾値，Thm 41 擬似逆，Thm 58 HamSim，…）の operator-level — ⬜
+- QSVT-6. Hermitian 符号化の QSVT `Pr U_Φ Pr = P_Φ(A)` と近似定理（`QSVT/Hermitian.lean`），**synthesis 定理** `exists_qsvt_approx_odd`（`QSVT/Synthesis.lean`） ✅；個別応用（Thm 27/28/30/31/41/58）の operator-level — ⬜（OAA ブロック恒等式は `Resource/Approx.lean` ✅）
 - POLY-1. parity，`BoundedOn`，`ApproxOn`，`evenCore/oddCore`，Chebyshev の有界性・parity，縮尺補題 — `Poly/Basic.lean` ✅
 - POLY-2. Weierstrass による parity 付き近似多項式の存在，sign 近似（Lemma 25 の存在形），増幅多項式（Rall Lemma 11） — `Poly/Approx.lean` ✅
 - POLY-*. 多項式近似（Lemma 25 sign，29，35，40，57 Jacobi–Anger，59，61，65，70，Thm 63/68…） — ⬜
 
 ## CPE（`MQSP/CPE`，Rall；詳細は `dev/inventory/cpe.md`）
 
-- CPE-0. ベクトルレベルの近似実装述語 `ApproxImpl ε M W S`，単調性，stitching（Lemma 7），uncompute（Lemma 3/8） — `CPE/Stitch.lean` ✅；rounding promise，推定レジスタ — ⬜
+- CPE-0. ベクトルレベルの近似実装述語 `ApproxImpl ε M W S`，単調性，stitching（Lemma 7），uncompute（Lemma 3/8） — `CPE/Stitch.lean` ✅；rounding promise（丸め規約）とビット，`cos²` 分離 — `CPE/Estimator.lean` ✅
 - CPE-1. 位相信号の block encoding: `I` と制御 `U^{2^k}` の LCU（Hadamard test）で `(1 + e^{2πiλ})/2 = cos(πλ) e^{iπλ}`；
   固有ベクトル上の作用 `e^{iθ/2}cos(θ/2)`，`A†A = cos²(θ/2)` — `CPE/Signal.lean` ✅；エネルギー信号 — ⬜
 - CPE-2. 1 ビット抽出: 増幅多項式 `A_{η→δ}`（Poly-Sign の変換）を偶多項式として `qsp`（Cor 18）で適用し，
-  固有空間上のスカラー評価 `p_Φ(cos²(θ/2))`（`proj_UΦ_plus_eigen`） — `CPE/Signal.lean` ✅；読み出し・作用素誤差への持ち上げ — ⬜
+  固有空間上のスカラー評価（`proj_UΦ_plus_eigen`） — `CPE/Signal.lean` ✅；1 ビット抽出 `bit_extraction` — `CPE/Estimator.lean` ✅；読み出し `readout_zero/one`（答え qubit の構造 `s•plus ψ + t•minus ψ`） — `CPE/Readout.lean` ✅；作用素誤差への持ち上げ — ⬜
 - CPE-3. coherent iteration（Thm 12）: stitching（Lemma 7：前条件つき近似写像の逐次合成，誤差 δ2^{−k−1}），
   uncompute（Lemma 3/8：copy + inverse，ベクトル版 2ε），クエリ数 `2^{n−k−1}·2M` の勘定 — ⬜
 - CPE-4. エネルギー推定（Thm 15）: Jacobi–Anger の `cos` 近似（GSLW Lemma 57/59）と `A∘p_cos²`（縮尺が必要） — ⬜
@@ -109,4 +110,4 @@
 
 ## LANG（`MQSP/Lang`）
 
-- LANG-1. `Prog P pf`，`denote`，`steady/weight/G/lift/queries`，合成的意味論，記法，`describe`/`numPorts` — `Lang/Prog.lean` ✅；`#mqsp_info` コマンド — ⬜
+- LANG-1. `Prog P pf`（`withDelay` 含む），`denote`，`steady/weight/G/lift/queries`，合成的意味論，記法，`describe`/`numPorts`，program-level compile 定理 — `Lang/Prog.lean` ✅；`#mqsp_info` — `Lang/Info.lean` ✅；例 — `Lang/Examples.lean` ✅

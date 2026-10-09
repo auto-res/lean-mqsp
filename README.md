@@ -41,11 +41,13 @@ lift M O N       -- unitary Toeplitz lift（mQSP Thm 2.2）: public ブロック
   生成関数と Cauchy 評価
 - `MQSP/Modules/` — Query, Cayley, WeightedCayley（Lemma 5.2），chain（有限 query 回路），反射 walk / Hermitian dilation
 - `MQSP/Algorithms/` — Hamiltonian simulation の理想ネットワーク `Exp ∘ WeightedCayley`（仕様/実装分離）
-- `MQSP/QSVT/` — SVD 不要の QSVT 定理（GSLW Thm 17），Cor 18，位相列 module，endpoint 回路
+- `MQSP/QSVT/` — SVD 不要の QSVT 定理（GSLW Thm 17），Cor 18，位相列 module，endpoint 回路，位相の存在（Cor 10），
+  Hermitian 信号の近似定理と synthesis
+- `MQSP/QSP/` — スカラー QSP（反射/回転規約，構造定理，相補多項式，存在定理；lean-qsvt からの port）
 - `MQSP/CPE/` — 位相信号の block encoding，固有空間ごとのビット抽出，近似実装の stitching / uncompute
 - `MQSP/Poly/` — parity 付き多項式，Chebyshev，Weierstrass による近似多項式の存在（sign，増幅多項式）
 - `MQSP/Resource/` — Def A.1 の資源勘定（重み付きクエリコスト）
-- `MQSP/Lang/` — 表面言語 `Prog`，`denote`，合成的意味論
+- `MQSP/Lang/` — 表面言語 `Prog`，`denote`，合成的意味論，`#mqsp_info`，例プログラム
 - `test/` — `lake test`（公理監査 `#print axioms`，言語のスモークテスト）
 
 ## ビルド
@@ -74,6 +76,12 @@ lake test
 | Cayley junction with load（Lemma 5.2） | `CayleyData.steady_eq` | `Modules/WeightedCayley.lean` |
 | **QSVT（GSLW Thm 17，SVD なし）**: `Π′U_ΦΠ = A p_Φ(A†A)` | `proj_UΦ_proj_odd/even` | `QSVT/Core.lean` |
 | 実多項式（Cor 18）: `(U_Φ + U_{−Φ})/2` | `proj_average_proj_odd` | `QSVT/RealPoly.lean` |
+| **QSP 位相の存在（GSLW Thm 3–5，Cor 10）** | `exists_phases` | `QSVT/Phases.lean`, `QSP/` |
+| **synthesis**: 連続奇関数 `f` ⟹ `‖QSVT − f(A)‖ ≤ ε` の位相列が存在 | `exists_qsvt_approx_odd` | `QSVT/Synthesis.lean` |
+| Hamiltonian simulation の理想ネットワーク `Exp[WeightedCayley]`: steady = `exp(−τM)` | `hamSim_steady` | `Algorithms/HamSim.lean` |
+| OAA のブロック恒等式（Lemma A.4）, 正規化・条件付き状態（Lemma A.2/A.3） | `oaa_block`, `isEncodingOf_rescale` | `Resource/Approx.lean` |
+| 重み付き遅延配分（Eq 1.18） | `sq_sum_sqrt_le`, `optimal_allocation` | `Resource/Allocation.lean` |
+| CPE: 1 ビット抽出と読み出し（答え qubit `|±⟩`，データ不変） | `bit_extraction`, `readout_zero`, `readout_one` | `CPE/Estimator.lean`, `CPE/Readout.lean` |
 | QSP 位相列 = chain module，endpoint clock で厳密 compile | `qsp_steady`, `isEncodingOf_chain_endpoint` | `QSVT/Module.lean`, `Compile/Endpoint.lean` |
 | spectral mapping: `|P−f| ≤ ε` on `[−1,1]` ⟹ `‖P(A) − f(A)‖ ≤ ε` | `norm_polyCalc_sub_cfc_le` | `Core/Spectral.lean` |
 | sign / 増幅多項式の存在（Weierstrass） | `exists_sign_approx`, `exists_amplifier` | `Poly/Approx.lean` |
