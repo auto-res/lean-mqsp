@@ -251,7 +251,7 @@ used by の `§6`, `§7`, `§8`, `App C/D/E` は範囲外の再利用箇所（§
 | Eq-1.30 | example | Cayley warm-up の compile | application | x ∈ [−1,1]、O(x) = Be[x] self-inverse、G = Cayley(z;x) ⟹ Be[G̃_N/2], sup_x abs(G̃_N(x) − Cayley(x)) ≤ ϵ、N = O(log 1/ϵ)、Q_O = N − 1；演算子版 x ↦ H/λ も同じ clock で一様 (1.31) | (1.23) 縮小、(1.27) 1 ≤ W ≤ 2、(1.28) 極の分離、(1.29) 外部 abs(F) ≤ abs(z)^3 ⇒ Thm 1.1（δ=1）；不変 2 次元部分空間でスカラー作用 | Thm 1.1, Eq-1.23 | 動機付け（§5.3.4 で HamSim へ） | MQSP/Library/Cayley.lean | 2 | derived | 不変部分空間への還元（qubitization 型）を Lean で一般補題化すべき。 |
 | Eq-1.40 | example | FPAA warm-up | application | λ = sin θ ∈ [λ_0, 1/2]、S_FPAA (1.38)、臨界減衰 c (1.37) ⟹ ζ = (1−√c)/16、abs(FPAA(z;λ)) ≤ abs(z)^{16/(1−√c)}（abs z ≥ 1）、α=2、N = O(λ_0^{-1} log 1/ϵ)；状態準備版 (1.41)(1.42)：私的残差 ‖r_N‖ ≤ (1 + N(1−c)/√c) c^{N/2}、Q_A + Q_A† = 2N+1 | Blaschke 因子の積の縮小 (1.34)、極半径 c^{-1/2}、Schur 基底での K^N 評価 | Thm 1.1, Eq-1.34 | Prop 5.3（精密化） | MQSP/Library/FPAA.lean | 3 | optional | 精密版 Prop 5.3 を優先。 |
 | Eq-1.48 | example | HamSim warm-up（正規化 2） | application | F_t = Exp_{tλ}(Cayley(z;x))、Re((1−z²+2izx)/(1+z²)) ≥ 0（abs z<1）(1.46)、ζ = 1/16、a = h− = 0、w = h+ = tλ、M=1 ⟹ α = 2、N = O(tλ + log 1/ϵ)、Q_O = N − 1；x ↦ H/λ で e^{−itH} | (1.46) の実部恒等式、abs(1±iz) 下界、Thm 1.1 | Thm 1.1, Eq-1.43 | Prop 5.5, §6.1 | MQSP/Library/HamSim.lean | 3 | derived | ‖Γ_t‖² = tλ (1.43)。 |
-| Eq-1.54 | example | 重み付き HamSim warm-up | application/query-complexity | H = Σ_j H_j、O_j = Be[H_j/λ_j]、遅延 r_j、G(z) = F_t(z^{r_1},…) ⟹ GG' = tΣλ_j r_j、abs(z−1) ≤ 1/(32 max r_j) ⇒ abs(z^{r_j} − 1) ≤ 1/16 (1.53)、外部指数 2tΣλ_j r_j ⟹ N = O(tΣλ_j r_j + max_j r_j log 1/ϵ)、Q_j = ⌊(N−1)/r_j⌋、α=2；r_j ∝ sqrt(C_j/(λ_j + log(2/ϵ)C_j/‖C‖_1)) で Σ C_j q_j = O(t⟨C,λ⟩_{1/2} + ‖C‖_1 log 1/ϵ) (1.56) | Thm 1.1 + Lemma 3.12 (p=1) + 丸め；非可換は ‖e^B‖ ≤ e^{λ_max((B+B†)/2)} | Thm 1.1, Lemma 3.12, Eq-1.51 | Thm 6.1 (§6) | MQSP/Library/AverageCost.lean | 3 | derived | 非可換持ち上げの行列指数ノルム不等式（Mathlib 要確認）。 |
+| Eq-1.54 | example | 重み付き HamSim warm-up | application | H = Σ_j H_j、O_j = Be[H_j/λ_j]、遅延 r_j、G(z) = F_t(z^{r_1},…) ⟹ GG' = tΣλ_j r_j、abs(z−1) ≤ 1/(32 max r_j) ⇒ abs(z^{r_j} − 1) ≤ 1/16 (1.53)、外部指数 2tΣλ_j r_j ⟹ N = O(tΣλ_j r_j + max_j r_j log 1/ϵ)、Q_j = ⌊(N−1)/r_j⌋、α=2；r_j ∝ sqrt(C_j/(λ_j + log(2/ϵ)C_j/‖C‖_1)) で Σ C_j q_j = O(t⟨C,λ⟩_{1/2} + ‖C‖_1 log 1/ϵ) (1.56) | Thm 1.1 + Lemma 3.12 (p=1) + 丸め；非可換は ‖e^B‖ ≤ e^{λ_max((B+B†)/2)} | Thm 1.1, Lemma 3.12, Eq-1.51 | Thm 6.1 (§6) | MQSP/Library/AverageCost.lean | 3 | derived | 非可換持ち上げの行列指数ノルム不等式（Mathlib 要確認）。 |
 
 ### 3.2 §2 Quditization
 
@@ -272,7 +272,7 @@ used by の `§6`, `§7`, `§8`, `App C/D/E` は範囲外の再利用箇所（§
 | Eq-2.32 | definition | clock ブロックと G̃_N | compilation | clock 準備 P_in, P_out（私的振幅 0）⟹ P_out†(I_label⊗W_N[G])P_in = Be[B_N]、B_N = Σ_n (Σ_{o−i=n,ℓ} conj(h_{oℓ})g_{iℓ})G_n (2.31)；X_{oi} = α Σ_ℓ conj(h_{oℓ})g_{iℓ}、c_n(X) = Σ_{o−i=n}X_{oi}、G̃_N = Σ c_n(X)G_n ⟹ Be[G̃_N/α] | 行列要素の計算 | Thm 2.2 | Thm 2.3, Lemma 2.4, Cor 3.1 | MQSP/Compile/Clock.lean | 1 | core | 共役の位置を Lean で固定すること。 |
 | Eq-2.34 | definition | clock norm と最小の達成 | compilation | ‖c‖_{clk,N} = min{‖X‖_* : Σ_{o−i=n}X_{oi} = c_n, 0≤n<N}；第 1 列に c を置くと可行、核ノルム球との交わりはコンパクトで最小達成 | 有限次元コンパクト性 | 核ノルムの連続性 | Thm 2.3, Eq-B.22 | MQSP/Compile/Clock.lean | 2 | derived | Mathlib に核ノルムなし → 因数分解ノルムで定義推奨。 |
 | Thm 2.3 | Theorem | Exact clock characterization | compilation | 有限スカラー clock 台に対し、overlap 行列 X/α が spectator ラベル付き正規化 clock で実現可能 ⟺ ‖X‖_* ≤ α；従って係数ベクトル c は ‖c‖_{clk,N} ≤ α のとき正確に正規化 α で実現可能；rank r なら r+2 ラベルで十分 | (⇒) Σ‖h_ℓ‖‖g_ℓ‖ ≤ (Σ‖h_ℓ‖²)^{1/2}(Σ‖g_ℓ‖²)^{1/2} = 1 (2.35)；(⇐) SVD X = Σ s_ℓ a_ℓ b_ℓ†、g_ℓ, h_ℓ ∝ √(s_ℓ/α)、未使用 2 ラベルでノルム補完 | Eq-2.32, SVD | Cor 3.1, Lemma 3.5, Thm 3.8, Thm 3.18, Thm 4.8, Prop A.7, Eq-A.23, Thm A.5, Thm 1.1, §8 Thm 8.2, App C.1.1 | MQSP/Compile/Clock.lean | 3 | core | (⇐) は SVD 必要。因数分解形（与えられた有限ペア列）の (⇐) は自明で、解析 clock は全て rank ≤ 6。SVD 版は optional に回せる。 |
-| Lemma 2.4 | Lemma | Clock extraction of a finite kernel | compilation | ブロック行列 E = [E_{oi}] と同じ添字のスカラー行列 X ⟹ ‖L_X(E)‖ ≤ ‖X‖_* ‖E‖ (2.37)；Thm 2.3 の因数分解が非 Toeplitz を含む任意有限 kernel の抽出を実装 | SVD の各 rank-1 項が圧縮 (⟨a_ℓ⟩⊗I)E(b_ℓ⊗I) (2.38)、三角不等式 (2.39) | Thm 2.3, SVD | Prop 3.17, Thm 3.18, Thm 4.8, §8 Thm 8.2 | MQSP/Compile/Clock.lean | 2 | core | 因数分解ノルム版 ‖L_X(E)‖ ≤ (Σ‖h_ℓ‖‖g_ℓ‖)‖E‖ なら SVD 不要（難度 1）。 |
+| Lemma 2.4 | Lemma | Clock extraction of a finite kernel | compilation | ブロック行列 E = [E_{oi}] と同じ添字のスカラー行列 X ⟹ ‖L_X(E)‖ ≤ ‖X‖_* ‖E‖ (2.37)；Thm 2.3 の因数分解が非 Toeplitz を含む任意有限 kernel の抽出を実装 | SVD の各 rank-1 項が圧縮 (a_ℓ†⊗I)E(b_ℓ⊗I) (2.38)、三角不等式 (2.39) | Thm 2.3, SVD | Prop 3.17, Thm 3.18, Thm 4.8, §8 Thm 8.2 | MQSP/Compile/Clock.lean | 2 | core | 因数分解ノルム版 ‖L_X(E)‖ ≤ (Σ‖h_ℓ‖‖g_ℓ‖)‖E‖ なら SVD 不要（難度 1）。 |
 
 ### 3.3 §3 Clock shaping
 
@@ -300,7 +300,7 @@ used by の `§6`, `§7`, `§8`, `App C/D/E` は範囲外の再利用箇所（§
 | Thm 3.9 | Theorem | Analytic clock shaping | approximation/error | 正整数遅延、G, W は (1.6)(3.6) の遅延伝達関数と群遅延；G 解析・縮小、G(1) ユニタリ、閉円板 abs(z−1) ≤ ζ（0<ζ≤1/16）近傍へ接続；promise 一様に aI ⪯ W ⪯ wI (3.75) と (3.76)（M_loc ≥ 1, h+ ≥ 0, 0 ≤ h− ≤ a）；0<δ≤1, 0<ϵ_clk<1 ⟹ 明示 rank-1 clock、‖X‖_* ≤ 1+δ、‖G̃_N − G‖ ≤ ϵ_clk、N = w + O(((w−a) + h+ + h− + ζ^{-1}log(3M_loc/ϵ_clk))/√δ) (3.77)；Be[G̃_N/(1+δ)]、q_j = ⌊(N−1)/r_j⌋ (3.78)；定数は普遍、明示 N は (3.72) | Thm 3.8 を単一半径 ρ = ζ で；Lemma 3.6 の箱平均（d = O(ζ^{-1}log(3M/ϵ))）；K = K_δ = O(δ^{-1/2})（(3.44) secant 界）；ℓ = ⌊a − h−⌋, u = ⌈w + h+⌉ を (3.74) に代入；clock 準備 O(N) ゲート (A.14) | Thm 3.8, Lemma 3.6, Lemma 3.5, Thm 2.2, Eq-A.14 | Thm 1.1, Cor 3.10, Cor 3.19, Prop 5.5, Eq-5.32, Eq-5.53, Eq-B.4, Cor B.5, §6, §7, App C, App D | MQSP/Shaping/Analytic.lean | 3 | core | 3.8 と 3.6 を仮定すれば O 記法の会計のみ。Lean では明示定数版 (3.72)/(3.74b) を主定理にし O 版は系に。 |
 | Cor 3.10 | Corollary | Normalization-two analytic selection | approximation/error | Thm 3.9 の仮定下で正規化 2 の clock、N = O(w + (w−a) + h+ + h− + ζ^{-1}log(3M_loc/ϵ_clk)) (3.80)；下界なしなら a = h− = 0 で N = O(w + h+ + ζ^{-1}log(3M_loc/ϵ_clk)) (3.81)；Be[G̃/2] | K = 2（α_2 = 5/4 < 2）で Thm 3.9、既知減衰 | Thm 3.9, Lemma 3.5 (α_2), Lemma A.2 | Cor 3.15, Thm 1.1（δ=1）, warm-ups, §6.1 (Thm 6.4), Lemma A.4 との組合せ | MQSP/Shaping/Analytic.lean | 2 | core | K=2 なら最適 flat clock 不要：箱型 clock（α = √2 など）で直接証明でき Lemma 3.5 を回避できる。 |
 | Lemma 3.11 | Lemma | Radial growth from an energy inequality | analysis-aux | F(s) = G(e^s) が水平線分 iy → x+iy 上で可微分、F(iy) ユニタリ、F 可逆、A−I ⪯ Re(F'(s)F(s)^{-1}) ⪯ A+I (3.82) ⟹ ‖F(x+iy)‖ ≤ e^{A+x}（x≥0）、≤ e^{A−x}（x≤0）；二次形式版 d/dx‖F(x+iy)v‖² の不等式からも同結論 | f(x) = F(x+iy)v、d/dx‖f‖² = 2Re⟨f, F'F^{-1}f⟩、Grönwall 型積分 | — | App C (C.1.1), 応用の radial 界 | MQSP/Analysis/RadialGrowth.lean | 2 | derived | 実 1 変数 ODE 比較（Mathlib の Grönwall `norm_le_gronwallBound_of_norm_deriv_right_le` 系で可）。 |
-| Lemma 3.12 | Lemma | Weighted delay allocation | query-complexity | a_j, C_j > 0、p > 0 ⟹ inf_{r_j>0} (Σ_j a_j r_j^p)^{1/p}(Σ_j C_j/r_j) = (Σ_j a_j^{1/(p+1)} C_j^{p/(p+1)})^{(p+1)/p} (3.83)、等号 r_j ∝ (C_j/a_j)^{1/(p+1)}；p=1 で (1.18) min (Σλ_j r_j)(Σ C_j/r_j) = ⟨C,λ⟩_{1/2} | Hölder（指数 p+1, (p+1)/p） | — | Eq-1.54, Cor 3.14, §6.1 (Thm 6.1, 6.2), §6.2 | MQSP/Shaping/Delays.lean | 2 | derived | 純実解析。Mathlib の `Real.inner_le_Lp_mul_Lq`。 |
+| Lemma 3.12 | Lemma | Weighted delay allocation | query-complexity | a_j, C_j > 0、p > 0 ⟹ inf_{r_j>0} (Σ_j a_j r_j^p)^{1/p}(Σ_j C_j/r_j) = (Σ_j a_j^{1/(p+1)} C_j^{p/(p+1)})^{(p+1)/p} (3.83)、等号 r_j ∝ (C_j/a_j)^{1/(p+1)}；p=1 で (1.18) min (Σλ_j r_j)(Σ C_j/r_j) = ⟨C,λ⟩_{1/2} | Hölder（指数 p+1, (p+1)/p） | — | Eq-1.54, Cor 3.14（特殊化）, §6.1 (Thm 6.2), §6.2 (Thm 6.5) | MQSP/Shaping/Delays.lean | 2 | derived | 純実解析。Mathlib の `Real.inner_le_Lp_mul_Lq`。 |
 | Cor 3.13 | Corollary | Mixed dispersion and precision bound | query-complexity | Thm 3.8 下、0<ρ≤ρ_0 が全て admissible、h+(ρ) + h−(ρ) ≤ D_rad ρ、d(ρ,ϵ) ≤ (c_sm/ρ)log(M_0/ϵ) (3.84) ⟹ N ≤ w + (K−1)(w−a) + KD_radρ + ((K+1)c_sm/ρ)log(M_0/ϵ) + 2K − 1 (3.85)；ρ_* = sqrt((K+1)c_sm log(M_0/ϵ)/(KD_rad)) ≤ ρ_0 なら N ≤ w + (K−1)(w−a) + 2sqrt(K(K+1)c_sm D_rad log(M_0/ϵ)) + 2K − 1 (3.87)；箱平均で M_0 = 3M_*, c_sm = 12 | (3.74) に代入、Aρ + B/ρ の最小化 | Thm 3.8, Lemma 3.6（定数） | Cor 3.14 | MQSP/Shaping/Delays.lean | 2 | derived | |
 | Eq-3.93 | identity | Young による主項分離 | query-complexity | Q ≤ T + 2√(BT) + R ≤ (1+η)T + B/η + R | AM-GM | — | §6.1 (Thm 6.1) | MQSP/Shaping/Delays.lean | 1 | derived | δ^{-2} 精度項の出所。 |
 | Cor 3.14 | Corollary | Weighted delay allocation (convex program) | query-complexity | Cor 3.13 の仮定を w = a = Σμ_j r_j、D_rad = Σν_j r_j² で証明済み (3.88) ⟹ Σ_j C_j q_j ≤ (Σμ_j r_j + KρΣν_j r_j² + ((K+1)c_sm/ρ)log(M_0/ϵ) + 2K − 1)·Σ_j C_j/r_j (3.89)；連続緩和は r_j = e^{y_j}, ρ = e^τ で凸（対数凸領域制約 (3.90) 下）；ν = μ で r_j = η√(C_j/μ_j) に特殊化 (3.91)(3.92) | (3.85) × Σ C_j/r_j を展開、各項 exp(アフィン) | Cor 3.13 | 応用での遅延最適化 | MQSP/Shaping/Delays.lean | 2 | derived | 幾何計画型。 |
@@ -353,7 +353,7 @@ used by の `§6`, `§7`, `§8`, `App C/D/E` は範囲外の再利用箇所（§
 | Cor 5.4 | Corollary | A block proportional to an isometry (OAA) | application | ユニタリ A が λV（V†V = I、λ ≥ λ_0、入力非依存）を block-encode、準備反射を A(2Π_in − I)A† に置換し出力 signal 射影を tap ⟹ Prop 5.3 が参照系とエンタングルした入力を含め一様に成立、成功出力は Vψ ⊗（ψ 非依存の時間記録） | 各特異部分空間で同じ 2 次元計算 | Prop 5.3 | OAA モジュール, §6 | MQSP/Library/OAA.lean | 3 | derived | 特異値が変わると時間記録が変わる（仮定の必要性）。 |
 | Eq-5.32 | identity | Sign 格子の解析データ | application | Sign(z;x) = zf (5.27)、r_L(1;x) = tanh(L artanh x)、abs(r_L − sgn x) ≤ 2e^{−2Lλ_0}（abs x ≥ λ_0）(5.29)；量子パス (5.30)(5.31)、L = 2N で最初の N 係数が diag(F_s, −F_s) と厳密一致；gapped 部分空間・abs(z−1) ≤ λ_0/16 で F_s†F_s' = (I + abs(A)^{-1})/2、M_loc = 1、‖F_s‖ ≤ abs(z)^{2/λ_0}（abs z ≥ 1）⟹ Thm 3.9（a = h− = 0, w = (1 + 1/λ_0)/2, h+ = 2/λ_0 − w）+ Cor 3.19 で O(λ_0^{-1}log 1/ϵ) query、正規化 2 | 双曲角加算 (5.28)、逆 Schur 写像の差 (B.7)、(B.8) の導関数評価と径方向積分 | Thm 3.9, Cor 3.19, Prop 3.17, Eq-B.8 | Prop B.2, Threshold, §6.6 | MQSP/Library/Sign.lean | 4 | derived | 分岐点が単位円上 ⇒ 局所解析＋平滑化（Lemma 3.6）が本質的に必要。 |
 | Eq-5.33 | definition | Threshold | application | (H − E_*I)/(λ + abs(E_*)) の 2 項 LCU（Be[H/λ] 1 回 + 混合 ancilla）に gap λ_0 = Δ/(λ + abs(E_*)) の Sign | LCU | Eq-5.32, Rule-5.2 (DirectSum/Project) | §6.6 | MQSP/Library/Threshold.lean | 2 | derived | |
-| Eq-5.36 | identity | HamSim の融合実現 | primitive | HamSim_T(z;x) = Exp_T(Cayley(z;x)) = exp(−T(1 − z² + 2izx)/(1 + z²)) (5.34)；持ち上げ Cayley (5.35)；有限 Exp 実現 [[a,b],[d,D_Exp]] と融合した S_ham（直交部分空間上の演算なのでユニタリ）、Ô = z(I_D ⊗ O) (5.36) | Substitute + Spectator | Rule-5.2, Eq-1.45 | Prop 5.5, Thm 5.6, §6.1 | MQSP/Library/HamSim.lean | 2 | core | |
+| Eq-5.36 | identity | HamSim の融合実現 | primitive | HamSim_T(z;x) = Exp_T(Cayley(z;x)) = exp(−T(1 − z² + 2izx)/(1 + z²)) (5.34)；持ち上げ Cayley (5.35)；有限 Exp 実現 [[a,b],[d,D_Exp]] と融合した S_ham（直交部分空間上の演算なのでユニタリ）、Ô = z(I_D ⊗ O) (5.36) | Substitute + Spectator | Rule-5.2, Exp_τ (1.45) | Prop 5.5, Thm 5.6, §6.1 | MQSP/Library/HamSim.lean | 2 | core | |
 | Prop 5.5 | Proposition | Analytic simulation with leading time coefficient one | application | O = Be[H/λ] self-inverse・controlled、T = λ abs(t)、0 < ϵ ≤ δ ≤ 1/4 ⟹ (5.34) は Be[G̃/(1+δ)] の有限 MQSP 実装を持ち ‖G̃ − e^{−itH}‖ ≤ ϵ、q_O ≤ T + O(δ^{−1/2}[√(T log(1/ϵ)) + log(1/ϵ) + 1]) (5.37)；吸収して q_O ≤ (1+δ)T + O(δ^{−2}log(1/ϵ)) | z = e^{u+iv}、M = −tanh(u+iv) + ix sech(u+iv)、−Re M/u ∈ [1 − 4s, 1 + 4s]（abs(u),abs(v) ≤ s ≤ 1/8）(5.38)；W = TI（スカラー）で a = w = T、h± = 4Ts、M_loc = 1、ζ = s/4；s ~ min{1, log(2/ϵ)/T}；有限実現は Thm 5.6 | Thm 3.9, Thm 5.6, Eq-5.36 | Table 9, §6.1, Cor B.5（比較） | MQSP/Library/HamSim.lean | 4 | derived | 単一項の HamSim。群遅延が完全に共通 ⇒ clock 平行移動で主項を吸収。 |
 | Eq-5.39 | definition | Padé 指数変換 | primitive | R_p(x) = P_p(−x)/P_p(x)（対角 Padé）、Exp̂_T(w) = R_p((T/J)(1−w)/(1+w))^J；J = Θ(max{1,T}) の 2 冪、p = O(log(J/(ϵδ))/log log(J/(ϵδ))) で Jp 私的モード、既知系 O(p + log(2Jp)log(2J)) ゲート・⌈log_2(Jp+1)⌉ + O(1) qubit | Thm B.4 | Thm B.4 | Cor B.5 | MQSP/Library/Exp/Pade.lean | 3 | optional | |
 | Thm 5.6 | Theorem | Finite exponential transform | primitive | T > 0、有限 horizon N に対し 2 つの有限実現：(i) Exp_T に N 段の Schur 再帰を適用し単位位相で終端 ⇒ 次数 N−1 まで一致する有理 inner 関数；C(0) = 0 より合成でも prefix 保存（Toeplitz load X = T_N[C] はべき零 X^N = 0）⇒ 比較誤差 0、D = N モード、G_S = O(N[a + log(N+2)])；(ii) スペクトル実現：p_k = 2T/(T² + 4π²k²)、u_k = (T − 2πik)/(T + 2πik)、W_T = coth(T/2)、abs(k) ≤ R (5.40)、残質量を u_* = −1 等へ；実装誤差 ξ で G_Exp = O(b_Exp log²(1/ξ))、n_Exp ≤ b_Exp + 4 (5.41)；8/(π(2s)!) ≤ ϵ/(6(1+δ))、R ≥ max{1, TN/π} (5.42) で D = O(TN + s)；誤差配分 ϵ_clk ≤ ϵ/3、η_N ≤ ϵ/(3(1+δ))、ξ ≤ ϵ/(3(1+δ)N) (5.43) | Schur 再帰 (B.55) と係数一致；partial fraction (B.43)(B.44)、accretive Schur 変換差 ≤ 2× 差、モーメント誤差 (B.46)–(B.48)；MPS 準備 (B.49)–(B.51)、帯域位相 GQSP (B.52)–(B.54)；Prop 3.17 | Prop 3.17, Eq-B.47, Eq-B.55, Eq-A.13, Eq-4.77 | Prop 5.5, §6.1 (Thm 6.1, 6.3, 6.4), Eq-A.33 | MQSP/Library/Exp/Finite.lean | 5 | optional | (i) Schur prefix 版は代数的で難度 3（core 候補）。(ii) のゲート数（MPS・GQSP）は重く optional。 |
@@ -368,7 +368,7 @@ used by の `§6`, `§7`, `§8`, `App C/D/E` は範囲外の再利用箇所（§
 | Def A.1 | Definition | Resource accounting | resource | §1.6 の規約一式：Be[A/λ] の unitary completion は promise 内で任意かつ全体が作用；1 query = controlled unitary の 1 起動、forward/inverse 別計上、controlled/inverse アクセスは promise；全実行 query（試行・棄却・増幅）を計上；oracle gate cost は制御・test・算術・基底変換込み；既知演算は量子ゲートで実装・計上；任意回転 + 2qubit ゲート、有限ゲート集合では合成誤差を L 回転に等分し Clifford+T で O(L log(2L/η)) (A.1)；qubit は system・ancilla・label・遅延位置・共存記録を含む | 規約 | — | ほぼ全ての資源主張, §6–§8 (10 回参照) | MQSP/Resource/Convention.lean | 2 | core | 「promise は unitary completion 全体を含む」は Lean の OracleSig に必須（§5.2 G1）。 |
 | Eq-A.2 | definition | isometry error | approximation/error | ‖U_circ(\|0⟩_aux ⊗ I) − \|0⟩_aux ⊗ G‖（漏れ・参照系エンタングル込み）；固定入力の状態準備はベクトルの Euclid ノルム | — | — | Prop 3.4, Lemma A.4, 応用 | MQSP/Resource/ErrorBudget.lean | 1 | core | |
 | Lemma A.2 | Lemma | Normalization and approximation error | approximation/error | G ユニタリ、回路が Be[A/(1+η)]、‖A − G‖ ≤ ξ < 1、0 < δ ≤ η ⟹ 同じ回路は Be[G̃_N/(1+δ)]、G̃_N = ((1+δ)/(1+η))A、‖G̃_N − G‖ ≤ (η − δ + (1+δ)ξ)/(1+η) ≤ η − δ + ξ (A.3)；成功確率 ≥ (1−ξ)²/(1+η)²、成功時 Euclid 状態誤差 ≤ 2ξ（参照系込み）；clock 再スケール X_δ = ((1+δ)/(1+η))X、‖X_δ‖_* ≤ 1+δ (A.4) | c = (1+δ)/(1+η) ≤ 1、cA − G = c(A − G) − (1−c)G；s = ‖Aψ‖ ≥ 1 − ξ；核ノルムの斉次性 | — | Prop 3.4, Thm 3.8, Cor 3.10, Cor 5.8, App C | MQSP/Resource/ErrorBudget.lean | 1 | core | 非ユニタリ標的では (1−c)‖A_0‖ に置換。 |
-| Lemma A.3 | Lemma | Conditioning an approximate output vector | approximation/error | β = ‖x‖ > 0、‖x̃ − x‖ ≤ E < β、成功非正規化出力 x̃/Z ⟹ 確率 ≥ (β − E)²/Z²、‖x̃/‖x̃‖ − x/β‖ ≤ 2E/β (A.5)；純粋状態トレース距離と部分トレースでも同じ | 逆三角不等式、x̃/β の加減 | — | Cor 5.8, §8 (Thm 8.11), App D | MQSP/Resource/ErrorBudget.lean | 1 | derived | |
+| Lemma A.3 | Lemma | Conditioning an approximate output vector | approximation/error | β = ‖x‖ > 0、‖x̃ − x‖ ≤ E < β、成功非正規化出力 x̃/Z ⟹ 確率 ≥ (β − E)²/Z²、‖x̃/‖x̃‖ − x/β‖ ≤ 2E/β (A.5)；純粋状態トレース距離と部分トレースでも同じ | 逆三角不等式、x̃/β の加減 | — | Cor 5.8, §8 (Thm 8.11) | MQSP/Resource/ErrorBudget.lean | 1 | derived | |
 | Lemma A.4 | Lemma | Oblivious amplitude amplification [BCC+15] | compilation | 完全ユニタリ A が G̃/2 を block-encode、G ユニタリ、‖G̃ − G‖ ≤ δ ≤ 1 (A.6)、R_clk は選択 clock セクタの反射 ⟹ A_OAA = −AR_clkA†R_clkA (A.7) は isometry error ≤ √(3δ² + δ³) ≤ 2δ (A.8)、encode する作用素は (3G̃ − G̃G̃†G̃)/2 (A.9)；forward 2 回・inverse 1 回 | G̃ = G(I + E)、C = (3(I+E) − (I+E)(I+E)†(I+E))/2 の展開 (A.10)(A.11)；差の Gram 2I − C − C† (A.12) で一次の反 Hermitian 項が相殺 | — | Prop 3.4, Cor 3.10（注）, warm-ups, §6, §7 (Thm 7.1), App E | MQSP/Resource/OAA.lean | 2 | core | 純代数＋ノルム評価。QSVT 側の OAA と共有可能。 |
 | Eq-A.13 | identity | 誤差予算（hybrid 論法） | approximation/error | 与えられた演算の一様作用素誤差 η_S, η_j、clock 準備誤差 η_in, η_out、η_rep = ‖T_N[G_finite] − T_N[G]‖、ϵ_clk = ‖G̃_N − G‖ ⟹ ϵ_final ≤ ϵ_clk + α_clk(η_rep + Nη_S + Σ_j q_jη_j + η_in + η_out) (A.13) | hybrid 論法（ユニタリ積の摂動は和）＋ Lemma 2.4 | Lemma 2.4, Thm 2.2 | Eq-1.19, Thm 5.6, Prop 3.4 (近似回路), 全応用の最終誤差 | MQSP/Resource/ErrorBudget.lean | 2 | core | 「近似実装された回路」の意味論が必要（§5.1 C9）。 |
 | Eq-A.14 | identity | clock 準備コスト | resource | 一様制御回転による既知状態準備は M 基底で O(M) ゲート・scratch なし；実 clock・ラベル ≤ 2 で両準備合わせ #Ry ≤ 4·2^{⌈log_2 N⌉} − 2、#CNOT ≤ 4·2^{⌈log_2 N⌉} − 4 | [SBM06, MVBS05] | — | Thm 3.9, Thm A.5 | MQSP/Resource/Routing.lean | 3 | optional | 引用結果。公理化が現実的。 |
@@ -391,9 +391,351 @@ used by の `§6`, `§7`, `§8`, `App C/D/E` は範囲外の再利用箇所（§
 | Prop B.2 | Proposition | A feasible clock with sharp fixed-gap rate | application | 0 < λ_0 < 1、0 < ϵ < e^{−2} ⟹ Sign が gapped 部分空間上で Be[S̃/2]、‖S̃ − sgn A‖ ≤ ϵ を q_O ≤ (log(1/ϵ) + (1/2)log log(1/ϵ))/artanh λ_0 + O_{λ0}(1) (B.18) で実装；N = 2m + 2、L = 2N、q_O = 2(N−1) = 4m + 2（m は誤差と clock ノルム検定を満たす整数） | Chebyshev 平方カーネル K_m と p_m = ∫K_m/∫K_m (B.19)(B.28)、誤差 δ_m ≤ 4e√(8m/(3λ_0))e^{−4m artanh λ_0} (B.29)；Fejér prefix 射影による clock (B.22)–(B.24)、Legendre 係数 (B.25)–(B.27)、Laplace 極限 A_m → A_* = 1 − 2erf(1) + 12/(e√π) < 2 (B.31)–(B.36) | Eq-5.32, Prop 3.17, Prop A.7, Eq-B.8 | Threshold, §6.6, Table 12 | MQSP/Library/Sign/Polynomial.lean | 5 | optional | Legendre/Bessel 漸近（Gaussian–Bessel 恒等式）は重い。O(λ_0^{-1}log 1/ϵ) の解析版 (Eq-5.32) を先に。 |
 | Eq-B.24 | identity | Fejér prefix による clock 構成 | compilation | f_n(k) = (1 − k/n)_+ の 2 階差分は 1_{k=n−1} (B.23)；d_n = n(c_{n−1} − 2c_n + c_{n+1}) と X = Σ_n d_n\|v_n⟩⟨v_n\|、\|v_n⟩ = n^{−1/2}Σ_{j<n}\|j⟩ (B.22) ⟹ Σ_n d_n(1 − k/n)_+ = c_k (B.24)、‖X‖_* ≤ Σ abs(d_n) | 2 回の和分 | Thm 2.3 | Prop B.2 | MQSP/Compile/Clock.lean | 1 | derived | 任意の（2 端点 0 の）重み列に使える汎用 clock：Lean で有用。 |
 | Lemma B.3 | Lemma | Known-cascade implementation | resource | d 次元既知係数の算術が所要精度で利用可能 ⟹ J 段カスケード S^[J]（AJ, BJ = (A^{J−1}B ⋯ B), CJ = (C; CA; …; CA^{J−1}), DJ = T_J[W] (B.38)）を isometry error η で poly(d, log(2J), log(1/η)) 既知ゲート + oracle レジスタ整列コストで実装 (B.39) | A^J は反復平方；境界ブロックの望遠鏡 Gram B_JB_J† = I − A^J(A†)^J (B.40) と 2 分木準備；内部ブロックは Schur 関数 W(z) = D + zC(I − zA)^{-1}B (B.41) の Fourier ブロック巡回 + 径方向減衰 L_q (B.42)；LCU（正規化 < 6）+ OAA | Lemma A.4, Eq-2.26 | §6.1 (SOS, Thm 6.2), App C (16963) | MQSP/Resource/Cascade.lean | 5 | optional | |
-| Eq-B.47 | identity | スペクトル Exp の有限 horizon 誤差 | approximation/error | (1+Exp_T(w))/(1−Exp_T(w)) = Σ_k p_k(1 + u_kw)/(1 − u_kw)、q = (1−w)/(1+w) (B.43)(B.44)；有限系 S_{T,R} (B.45) はユニタリ；べき零縮小 X（X^K = 0）で g_u(X) = (I + uX)(I − uX)^{-1} は accretive、Σ_{k>R}p_k ≤ T/(2π²)·(1/(3R³)) (B.46) ⟹ ‖Exp_{T,R}(X) − Exp_T(X)‖ ≤ T³K(K−1)(2K−1)/(9π⁴R³) (B.47)；s 点 Gauss 求積版で ≤ 8/(π(2s)!)（R ≥ max{1, TK/π}）(B.48) | 部分分数、Schur 変換差 ≤ 2× 差、モーメント誤差、Taylor 剰余 | Eq-4.77, Prop 3.17 | Thm 5.6 | MQSP/Library/Exp/Spectral.lean | 4 | optional | coth の部分分数展開は Mathlib にある（`Complex.cot` 系）か要確認。 |
+| Eq-B.47 | identity | スペクトル Exp の有限 horizon 誤差 | approximation/error | (1+Exp_T(w))/(1−Exp_T(w)) = Σ_k p_k(1 + u_kw)/(1 − u_kw)、q = (1−w)/(1+w) (B.43)(B.44)；有限系 S_{T,R} (B.45) はユニタリ；べき零縮小 X（X^K = 0）で g_u(X) = (I + uX)(I − uX)^{-1} は accretive、p_k ≤ T/(2π²k²)、Σ_{k>R} k^{−4} ≤ 1/(3R³)、g_u(X) = I + 2Σ_{n=1}^{K−1} u^nX^n (B.46) ⟹ ‖Exp_{T,R}(X) − Exp_T(X)‖ ≤ T³K(K−1)(2K−1)/(9π⁴R³) (B.47)；s 点 Gauss 求積版で ≤ 8/(π(2s)!)（R ≥ max{1, TK/π}）(B.48) | 部分分数、Schur 変換差 ≤ 2× 差、モーメント誤差、Taylor 剰余 | Eq-4.77, Prop 3.17 | Thm 5.6 | MQSP/Library/Exp/Spectral.lean | 4 | optional | coth の部分分数展開は Mathlib にある（`Complex.cot` 系）か要確認。 |
 | Eq-B.54 | identity | MPS 準備と帯域位相 | resource | 2 進帯域 k = L(3/2 + y/2) 上の振幅比 f_a(y) は半径 5/4 円板で解析・abs ≤ 8/7 ⇒ 次数 O(log 1/ξ) 多項式 (B.49)(B.50)；係数シフト (B.51) で bond O(log 1/ξ)；逐次 MPS 準備 O(b_Exp χ²) ゲート；位相 u_A(x) を GQSP、2 段 OAA（f_5(s) = 5s − 20s³ + 16s⁵）で isometry error ≤ 24η (B.52)–(B.54) | Cauchy 係数評価、[SSV+05]、[MW24] | — | Thm 5.6 (ii) | MQSP/Library/Exp/Spectral.lean | 5 | optional | ゲート合成の詳細。後回し推奨。 |
 | Eq-B.55 | identity | Schur prefix による Exp | primitive | φ(q) = exp(−λt(1−q)/(1+q))、Schur 再帰 γ_j = f_j(0)、f_{j+1} = (f_j − γ_j)/(q[1 − conj(γ_j)f_j]) (B.55)；各逆ステップは既知 2 モードユニタリ（反射 γ_j、透過 √(1 − abs(γ_j)²)）；K 段で φ と次数 K−1 まで一致；最小遅延 r_min の load で一致係数数は r_min 倍 ⇒ Kr_min ≥ N で最初の N clock slot 一致；CMV 基底で 2 層 | 古典 Schur アルゴリズム（QSP の角度剥離と同型） | — | Thm 5.6 (i), Eq-5.53 (D = N Schur modes) | MQSP/Library/Exp/SchurPrefix.lean | 3 | derived | 係数一致は有限 Taylor 係数の代数で Lean 向き。QSP 合成と共通化できる。 |
-| Thm B.4 | Theorem | Finite implementation of Exp (Padé) | approximation/error | τ > 0、0 < ϵ ≤ δ ≤ 1/4、J = 2^{⌈log_2 max{1,16τ}⌉}、σ = τ/J、β_p = 4(p!)²/((2p)!(2p+1)!4^{2p+1}) (B.57)、Jβ_p ≤ cϵδ²（最小の p）、Exp̂_τ(w) = R_p(σ(1−w)/(1+w))^J (B.58) ⟹ Exp̂_τ は rational inner、私的モード D = Jp のユニタリ実現 S_Exp、1 適用（controlled/inverse 含む）で q_Exp ≤ ⌈log_2(D+1)⌉ + O(1) (B.59)、G_Exp = O(p + log(2Jp)log(2J)) (B.60)、p = O(log(J/(ϵδ))/log log(J/(ϵδ))) (B.61)；H = H†, ‖H‖ ≤ Λ, τ = tΛ で ‖Exp̂_τ((I + iH/Λ)(I − iH/Λ)^{-1}) − e^{itH}‖ = ‖R_p(−itH/J)^J − e^{itH}‖ ≤ Jβ_p (B.62) | 対角 Padé は Re x ≥ 0 で abs(R_p) ≤ 1、虚軸で 1 (B.63)；剰余積分 (B.64)、後退誤差 E_p(X) = log(e^XR_p(X))、‖E_p‖ ≤ β_p、‖DE_p‖ ≤ 16β_p (B.65)；R_p(X)^J = e^{itH}exp[JE_p(X)] (B.66)；CMV + cosine–sine 分解 (B.67)(B.68)、dyadic 因数分解 [CGJ+26] | Eq-4.77 | Cor B.5, Eq-5.39 | MQSP/Library/Exp/Pade.lean | 4 | optional | 行列対数・Padé 剰余の形式化。誤差部分（B.62）は難度 3。 |
+| Thm B.4 | Theorem | Finite implementation of Exp (Padé) | approximation/error | τ > 0、0 < ϵ ≤ δ ≤ 1/4、J = 2^{⌈log_2 max{1,16τ}⌉}、σ = τ/J、β_p = 4(p!)²/((2p)!(2p+1)!4^{2p+1}) (B.57)、Jβ_p ≤ cϵδ²（δ の指数は抽出で崩れており要確認; p はこれを満たす最小整数）、Exp̂_τ(w) = R_p(σ(1−w)/(1+w))^J (B.58) ⟹ Exp̂_τ は rational inner、私的モード D = Jp のユニタリ実現 S_Exp、1 適用（controlled/inverse 含む）で qubit 数 q_Exp ≤ ⌈log_2(D+1)⌉ + O(1) (B.59)、G_Exp = O(p + log(2Jp)log(2J)) (B.60)、p = O(log(J/(ϵδ))/log log(J/(ϵδ))) (B.61)；H = H†, ‖H‖ ≤ Λ, τ = tΛ で ‖Exp̂_τ((I + iH/Λ)(I − iH/Λ)^{-1}) − e^{itH}‖ = ‖R_p(−itH/J)^J − e^{itH}‖ ≤ Jβ_p (B.62) | 対角 Padé は Re x ≥ 0 で abs(R_p) ≤ 1、虚軸で 1 (B.63)；剰余積分 (B.64)、後退誤差 E_p(X) = log(e^XR_p(X))、‖E_p‖ ≤ β_p、‖DE_p‖ ≤ 16β_p (B.65)；R_p(X)^J = e^{itH}exp[JE_p(X)] (B.66)；CMV + cosine–sine 分解 (B.67)(B.68)、dyadic 因数分解 [CGJ+26] | Eq-4.77 | Cor B.5, Eq-5.39 | MQSP/Library/Exp/Pade.lean | 4 | optional | 行列対数・Padé 剰余の形式化。誤差部分（B.62）は難度 3。 |
 | Cor B.5 | Corollary | Replacement in Hamiltonian simulation | application | H = ΣH_j、O_j = Be[H_j/λ_j] controlled self-inverse（λ_j > 0、コスト C_j）、Λ = ‖λ‖_1、τ = tΛ；Thm B.4 の実現を −H_j 用 WeightedCayley と合成、M(z) = Σ λ_j[((1 − z_j²)/(1 + z_j²))I − (2iz_j/(1+z_j²))H_j/λ_j]（M(1) = −iH）、F̂(z) = R_p((t/J)M(z))^J (B.70) ⟹ 構成的整数遅延 r_j で Be[G̃_N/(1+δ)]、‖G̃_N − e^{itH}‖ ≤ ϵ (B.71)、q_j = ⌊(N−1)/r_j⌋ (B.72)、Σ C_jq_j ≤ (1+δ)t⟨C,λ⟩_{1/2} + O(δ^{−2}‖C‖_1 log(1/ϵ)) (B.73)；J, p は oracle 回数に掛からない；d_c = N + JpΣr_j2^{a_j} (B.74) | F̂(1)†∂_jF̂(1) = tλ_j[I − E_p'(−itH/J)]、(1 − 16β_p)I ⪯ … ⪯ I (B.75)(B.76)；遅延スライスの two-sided 界 (B.78)、後退誤差恒等式 (B.79)；主文の clock 整形 + 整数遅延構成 | Thm B.4, Lemma 5.2, Thm 3.9, Thm 6.1 / App C.1.1 の遅延構成 | Table 12 | MQSP/Library/Exp/Pade.lean | 4 | optional | Thm 6.1（範囲外）の遅延選択を再利用。 |
 
+---
+
+## 4. 依存グラフ（core + derived; 辺 A → B は「A が B の証明に使われる」）
+
+点線は範囲外（§6–§8, App C–E）での再利用。optional の項目（Thm 4.1, Prop 4.5/4.6, Thm 5.6(ii), Lemma 5.7, Prop A.7,
+Prop B.2, Lemma B.3, Thm B.4, Cor B.5, Lemma A.6 など）は省略。
+
+```mermaid
+graph TD
+  %% --- feedback / steady state ---
+  P42["Prop 4.2 query-count coords"] --> E23["Eq-2.3 Neumann/path expansion"]
+  E23 --> T21["Thm 2.1 unitary kernel & catalyst"]
+  E27["Eq-2.7 steady state"] --> T21
+  T21 --> E216["Eq-2.16 probability balance"]
+  T21 --> E217["Eq-2.17 thrifty composition"]
+  T21 --> E4103["Eq-4.103 cascade"]
+  E217 --> E515["Eq-5.15 catalyst accounting"]
+  E4103 --> E515
+  E515 --> E516["Eq-5.16 analytic data of cascades"]
+  P42 --> P51["Prop 5.1 unitary junction"]
+  E23 --> P51
+  T21 --> P51
+  T47["Thm 4.7 finite realization (lurking isometry)"] --> P51
+  T21 --> T47
+  P51 --> R52["Rule-5.2 connection rules"]
+  E4103 --> R52
+  %% --- compilation ---
+  E221["Eq-2.21 causal convolution"] --> T22["Thm 2.2 unitary Toeplitz lift"]
+  T22 --> E226["Eq-2.26 Toeplitz contraction"]
+  T22 --> E232["Eq-2.32 clock block, G~_N"]
+  E232 --> T23["Thm 2.3 exact clock characterization"]
+  T23 --> L24["Lemma 2.4 kernel extraction"]
+  T23 --> C31["Cor 3.1 error-normalization frontier"]
+  E226 --> C31
+  L24 --> P317["Prop 3.17 comparison stability"]
+  T23 --> T318["Thm 3.18 constructive compilation"]
+  L24 --> T318
+  T22 --> T318
+  P317 --> T318
+  L24 --> EA13["Eq-A.13 error budget"]
+  T22 --> EA13
+  %% --- transients ---
+  T21 --> E35["Eq-3.5 port transient K_j"]
+  E35 --> E36["Eq-3.6 K(z), K(1)=W"]
+  E221 --> E312["Eq-3.12 step response, K_n"]
+  T21 --> E312
+  E312 --> E314["Eq-3.14 transient identity"]
+  E314 --> E317["Eq-3.17 uniform clock"]
+  %% --- uniform clock ---
+  T21 --> T32["Thm 3.2 uniform-clock baseline"]
+  T22 --> T32
+  E27 --> L33["Lemma 3.3 terminal formula"]
+  E312 --> L33
+  T22 --> L33
+  L33 --> E317
+  L33 --> P34["Prop 3.4 OAA + uniform catalyst"]
+  LA2["Lemma A.2 normalization/attenuation"] --> P34
+  LA4["Lemma A.4 OAA"] --> P34
+  %% --- analytic shaping ---
+  T23 --> L35["Lemma 3.5 optimal flat clock"]
+  E312 --> E354["Eq-3.54 summation by parts"]
+  E312 --> E357["Eq-3.57 contour coefficient formulas"]
+  E354 --> L36["Lemma 3.6 smoothed flat window"]
+  E357 --> L36
+  E365["Eq-3.65 smoothing keeps nuclear norm"] --> L36
+  E216 --> L36
+  E357 --> D37["Def 3.7 admissible smoother"]
+  L35 --> T38["Thm 3.8 scale-optimized shaping"]
+  D37 --> T38
+  E354 --> T38
+  E365 --> T38
+  T22 --> T38
+  LA2 --> T38
+  T38 --> T39["Thm 3.9 analytic clock shaping"]
+  L36 --> T39
+  L35 --> T39
+  E36 --> T39
+  T39 --> T11["Thm 1.1 analytic MQSP compilation"]
+  T22 --> T11
+  T23 --> T11
+  T39 --> C310["Cor 3.10 normalization two"]
+  L35 --> C310
+  T39 --> C319["Cor 3.19 restricted input"]
+  C310 --> C315["Cor 3.15 joint analytic domain"]
+  T38 --> C313["Cor 3.13 dispersion vs precision"]
+  L36 --> C313
+  C313 --> C314["Cor 3.14 convex delay program"]
+  L36 --> C316["Cor 3.16 finite-degree port"]
+  T38 --> C316
+  L311["Lemma 3.11 radial growth"]
+  L312["Lemma 3.12 Hoelder delay allocation"]
+  %% --- achievability ---
+  P42 --> T44["Thm 4.4 finite-history realization"]
+  T44 --> T48["Thm 4.8 clock completeness"]
+  T23 --> T48
+  L24 --> T48
+  C31 --> T48
+  T43["Thm 4.3 causal Gram"] -.-> T48
+  E477["Eq-4.77 accretive Cayley"] --> T49["Thm 4.9 Cayley realization"]
+  T49 --> E4101["Eq-4.101 Schur complement"]
+  E477 --> E4101
+  T49 --> L52["Lemma 5.2 Cayley junction"]
+  E477 --> L52
+  %% --- library ---
+  L52 --> E510["Eq-5.10 WeightedCayley"]
+  R52 --> E536["Eq-5.36 HamSim fused system"]
+  EB55["Eq-B.55 Schur prefix"] --> T56i["Thm 5.6(i) finite Exp, Schur"]
+  P317 --> T56i
+  T39 --> P55["Prop 5.5 HamSim leading coeff 1"]
+  E536 --> P55
+  T56i --> P55
+  E510 --> E553["Eq-5.53 two-term weighted example"]
+  T39 --> E553
+  EB8["Eq-B.8 sign lattice"] --> E532["Eq-5.32 Sign analytic data"]
+  T39 --> E532
+  C319 --> E532
+  P317 --> E532
+  EB8 --> LB1["Lemma B.1 finite Sign"]
+  EB1["Eq-B.1 FPAA metric"] --> P53["Prop 5.3 FPAA"]
+  T22 --> P53
+  P53 --> C54["Cor 5.4 OAA isometry"]
+  E510 --> C58["Cor 5.8 state preparation"]
+  LA2 --> C58
+  LA3["Lemma A.3 conditioning"] --> C58
+  %% --- resources ---
+  DA1["Def A.1 resource accounting"] --> TA5["Thm A.5 gate/qubit overhead"]
+  T22 --> TA5
+  T23 --> TA5
+  TA5 --> EA31["Eq-A.31 common resource formula"]
+  DA1 --> EA13
+  %% --- external reuse ---
+  X6["Sec 6-8, App C-E (out of scope)"]
+  T39 -.-> X6
+  T22 -.-> X6
+  L52 -.-> X6
+  TA5 -.-> X6
+  LA4 -.-> X6
+  L312 -.-> X6
+  L311 -.-> X6
+  T32 -.-> X6
+  T318 -.-> X6
+  X6 -.-> C58
+```
+
+---
+
+## 5. 設計へのフィードバック
+
+### 5.1 言語・フレームワークが表現できなければならない構成要素
+
+- **C1 モジュール（ユニタリ接合）**: 既知ユニタリ S on `P ⊕ ⊕_j L_j`、私的 port 群とそのフィードバック。Prop 5.1 により任意の
+  有限次元実現はこの形なので、`Module` はこれ 1 つを原始概念にしてよい（sketch の方針どおり）。
+- **C2 port と oracle 型の分離**: 解析変数（marker）は port に付くが、コストは oracle 型（forward/inverse 別）で数える。
+  FPAA の `zO_θ`（P と P† を 1 回ずつ）、Sign の `zU_odd U_even`（O を 2 回）、StatePrep の `V_j`（U_j, U_j†）、
+  恒等フィードバック（コスト 0 だが記憶を占有: BufferedSeries, tap の z², Exp の `wI` 内部接続）を一様に扱うには、
+  port = 「base oracle から作られる既知回路 + 呼び出し多重度ベクトル ∈ ℕ^{型×{fwd,inv}}」とする必要がある。
+- **C3 3 層の意味論**: (i) z=1 の定常値（代数的）、(ii) 多重円板/遅延スライス上の解析的伝達関数 `F(z;O)`, `G(z)`、
+  (iii) 有限データ `G_n`, `T_N[G]`, `W_N[G]`（多項式・有限和）。(iii) は (ii) を経由せず直接（バッファ化実現の
+  `B D_buf^{n−1} C` 型の再帰で）定義し、(ii) との一致は別定理にする（§5.2 G4）。
+- **C4 clock**: 因数分解形（有限個のペア `(h_ℓ, g_ℓ)`）、`c_n(X)`, `L_X(E)`、正規化 `Σ‖h_ℓ‖‖g_ℓ‖`；二時刻 kernel（§8 用）。
+- **C5 解析証明書 `AnalyticCert`**: `(ζ, M_loc, a, w, h−, h+)` と「promise 上一様」の量化、縮小性、ユニタリ境界値。
+  Series/DirectSum の合成則 (5.16)、遅延スライスへの引き戻し（Cor 3.15）、制限入力（Cor 3.19）を演算として持つ。
+- **C6 promise と一様性**: 既知部分（S, clock, 遅延）は O に依存しない項として定義し、上界は `∀ O ∈ Promise` で述べる。
+  Def A.1 により promise は unitary completion 全体を含む（block の値しか規定しない）。
+- **C7 矩形・射影**: `P →L Q`（入出力空間が異なる; Lemma 3.6, Cor 3.19）、`Π_in ≠ Π_out`（(4.1), Project）。
+- **C8 仕様と実装の分離**: 「理想伝達関数（実現なしでも可、例: 無限次元の Exp_τ）」と「有限実現」、および Toeplitz 比較誤差
+  `‖K_N − T_N[Ĝ]‖`（Prop 3.17, Thm 3.18）。
+- **C9 コンパイル後の回路演算**: 既知減衰（Lemma A.2）、OAA（Lemma A.4）、補正 SELECT との LCU（Thm 3.18）、射影・
+  成功確率・条件付き状態（Lemma A.3）、近似実装の hybrid 誤差 (A.13)。これはモジュールではなく `BlockEncodingCircuit` 層の演算。
+- **C10 固定スケジュール query 回路**: `V(ω) = K_T Q_{j_T} ⋯ K_1 Q_{j_1} K_0`、coherent bypass（Thm 4.3, 4.4, 4.8）。
+  QSVT/QSP の埋め込み（Thm 4.4 + 端点 clock (4.76)）の意味論的基盤。
+- **C11 資源**: 重み付き query コスト（型別・方向別）、触媒重み（状態依存、thrifty 合成）、次元・アドレス幅。ゲート数は別層。
+
+### 5.2 sketch (v0) のギャップ（論文が必要とするが sketch では表現できない／不自然なもの）
+
+- **G1 OracleSig が狭い**: 「port j ごとに 1 つの oracle 空間 K j とコスト C j」では、(a) 同一 oracle の複数コピー
+  `I_copy ⊗ O_j`（1 回の呼び出しとして数える）、(b) 1 port に複数 oracle 呼び出し（FPAA, Sign, StatePrep）、(c) 逆アクセス
+  `O_j†`（Inverse 規則, Def A.1 の forward/inverse 別計上）、(d) controlled アクセス、(e) コスト 0 の恒等 port、を表せない。C2 の形に一般化を。
+- **G2 定常状態の仮定**: sketch は `1 − DQ` 可逆を仮定するが、論文は Abel 極限／解析接続で Γ(1) を定義し、
+  「公開入力から到達可能な応答の正則性」しか要求しない（Prop 5.1; AP1 で a = 1 のとき D = 1, Q = x = 1 で `I − DQ = 0` だが C = 0）。
+  本調査での導出（要検証）: 有限次元で S, Q がユニタリなら `V = ker(I − DQ)` 上で `BQ = 0` かつ `C†V = 0` が S のユニタリ性から従い、
+  縮小 T = DQ では `ker(I − T) = ker(I − T†)` なので `ran C ⊆ ran(I − DQ)`。よって**定常解は常に存在**し、F(1) = A + BQΓ は
+  解の選び方に依らず**常にユニタリ**、Abel 極限の触媒は最小ノルム解 `Γ = (I − DQ)^+ C`（Moore–Penrose）。さらに 1 変数スライス
+  では `G(z)` は z=1 の近傍で自動的に解析（有理関数で極は 1 を避ける）。したがって Lean では可逆性仮定を外し、Γ を擬似逆で定義する
+  のが最も一般的。真の仮定は「promise 上一様な定量的上界（ζ, M_loc, w など）」だけになる。
+- **G3 遅延はモジュールの属性ではなくコンパイル時パラメータ**: 論文では `r` は clock shaping で選ぶ（Cor 3.14 の最適化、丸め）。
+  また BufferedSeries・tap の内部遅延 w は oracle port ではない。`Module`（S, ports）と `Schedule`（r, N, clock）を分けるべき。
+- **G4 多変数係数の扱い**: `F_n (n : ι → ℕ)` を経路和で定義するのは可能だが重い。Thm 2.2 の公開ブロック一致は、
+  遅延を shift register として私的空間に吸収した**バッファ化 1 変数実現**（(3.24) の Ŝ）で `G_n = B_buf D_buf^{n−1} C_buf`
+  とすれば時刻に関する帰納法だけで証明できる。`G(z) = F(z^{r_1},…)` との一致は解析層の別補題。
+- **G5 無限次元モジュール**: 理想 `Exp_τ` の実現 (1.45) は私的モード k ∈ ℤ（ℓ²）。有限次元前提の sketch では「仕様（解析関数 +
+  証明書）」としてしか持てない → C8 の Spec/Impl 分離と Prop 3.17 型の比較誤差が必須。
+- **G6 矩形伝達関数・異なる入出力射影**: sketch は `F : P → P` 正方を暗黙に仮定。Lemma 3.6・Cor 3.19・Project・(4.1) は矩形が必要。
+- **G7 コンパイル後の演算**: OAA（3 倍の query）、既知減衰、補正付き LCU（Thm 3.18 の `Y = X ⊕ diag(ξ)`）、成功確率・条件付き誤差、
+  hybrid 誤差 (A.13) が sketch の「resources」項目に入っていない。
+- **G8 固定スケジュール回路と自由関数**: §4 の Thm 4.3/4.4/4.8 と QSVT 埋め込みには `QueryCircuit`（語 `FreeMonoid ι` による
+  スケジュール、bypass）の型が要る。sketch の `Lang` は接続規則の構文しかない。
+- **G9 Las Vegas 重みの一般定義**: (2.9) の `L_j(A) = Σ V_s†Π_sV_s` は任意回路の重み。thrifty 合成 (2.17)/(5.15) を
+  「最悪ノルムを取る前の状態依存等式」として持つには、重みを作用素（`P →L P` の正作用素）で持つ必要。
+- **G10 時間依存（§8; 範囲外）**: event ごとに S_t, O_t が変わる。Module を時刻添字付きに一般化できる設計余地を残すこと。
+- **G11 ゲートレベル**: Thm A.5・Lemma A.6・(A.14)・Thm B.4/5.6 のゲート数は 2 進アドレス・可逆算術の回路モデルを要する。
+  query 主張とは独立なので別層（optional）に。
+- **G12 Close/Substitute の正則性**: 逆 `(I − F_ee wV)^{-1}` が解析領域上で存在する仮定と、合成後の解析近傍の再検証
+  （(5.17) で極が 1 に近づく例）を AnalyticCert の演算として持つ必要。
+
+### 5.3 推奨する形式化順序
+
+1. **Phase 0 線形代数基盤**: 直和・2×2 ブロック作用素（`P ⊕ L` 上の CLM）、ユニタリのブロック恒等式、`Fin N → P` レジスタ（PiLp 2）、
+   下三角 Toeplitz、因数分解 clock とその正規化、Loewner 順序。
+2. **Phase 1 代数的コア（z を固定）**: Module・定常解（擬似逆）・F(1) ユニタリ (2.7)(2.10)、2 点恒等式 (2.11)(2.14)(2.16)、
+   thrifty 合成 (2.17)/(5.15)、接続規則の定常値 (Rule-5.2)、Query/AP1/Cayley/WeightedCayley の実現、Thm 4.9, Lemma 5.2,
+   (4.77)(4.101)、Thm 4.4、Thm 4.7（有限次元 lurking isometry）、Prop 4.2。
+3. **Phase 2 有限コンパイル**: バッファ化実現、`G_n`、Thm 2.2（lift）、(2.26)、clock (2.32)・Thm 2.3（因数分解方向）・Lemma 2.4、
+   transient (3.12)(3.14)、Lemma 3.3、(3.17)、Prop 3.17、Thm 3.18、Lemma A.2、Lemma A.4、(A.13)。ここまでで
+   「uniform clock + OAA」（Prop 3.4）が完全に証明でき、BJY24 型の多項式精度の end-to-end 定理が得られる。
+4. **Phase 3 解析の入口**: 多重円板解析性 (2.3)、Γ の z=1 での微分と (2.12)(2.13)、K(z) の除去可能性 (3.6)、
+   大域半径版の Cauchy 係数評価（§5.5 S7; FPAA 等）、箱型 flat clock（§5.5 S4）、平滑化の組合せ部分 (3.54)(3.65)。
+5. **Phase 4 解析的 clock shaping**: Lemma 3.6（対数長方形輪郭版; §5.5 S3）、Thm 3.8、Thm 3.9、Cor 3.10、Thm 1.1、Cor 3.19、
+   Lemma 3.11、Cor 3.15/3.16、Lemma 3.12・Cor 3.13/3.14。最適 flat clock（Lemma 3.5）は δ^{-1/2} を得るための後段。
+6. **Phase 5 ライブラリの解析データ**: Cayley (1.23)–(1.29)、HamSim（Prop 5.5、対数座標評価 (5.38)）、AverageCost (5.52)、
+   FPAA（Prop 5.3, (B.1)–(B.4)）、Sign (5.32)/(B.8)/Lemma B.1、Schur prefix Exp（Thm 5.6(i), (B.55)）。
+7. **Phase 6（optional）**: §4 の理論（Thm 4.1, 4.3, 4.8, Prop 4.5/4.6）、Cor 3.1 の SDP、Prop A.7、ゲート数（Thm A.5, Lemma A.6,
+   Lemma B.3, Thm B.4, Thm 5.6(ii)）、Prop B.2、Lemma 5.7。
+
+### 5.4 代数的・有限（Lean で容易）vs 解析的（難）
+
+| 区分 | 項目 |
+|---|---|
+| 純代数・有限次元（難度 1–2） | Eq-2.7, Eq-2.10, Thm 2.1 の (2.11)(2.14)(2.16)（z 固定）, Eq-2.17, Eq-2.21, Eq-2.26, Eq-2.32, Lemma 2.4（因数分解版）, Thm 2.3（⇒ と因数分解 ⇐）, Eq-3.12, Eq-3.14, Eq-3.16, Eq-3.17, Lemma 3.3, Eq-3.54, Eq-3.65, Prop 3.17, Thm 3.18, Eq-3.118, Eq-3.119, Prop 4.2, Thm 4.4, Eq-4.24, Eq-4.77, Eq-4.82, Thm 4.9, Eq-4.101, Eq-4.103, Prop 5.1（z=1 部分）, Lemma 5.2, Eq-5.4/5.10/5.13/5.15/5.36, Rule-5.2（定常値）, Lemma A.2, A.3, A.4, Eq-A.13, Eq-B.24, Eq-B.1 |
+| 組合せ・index 管理が主（難度 3） | Thm 2.2（lift の時刻・mod r_j）, Thm 3.2（解析用定常波の挿入）, Thm 4.7（span 上の等長の well-definedness と拡張）, Thm 4.8, Eq-B.55（Schur 再帰の係数一致）, Eq-B.8 |
+| 実解析（難度 2–3） | Lemma 3.11（ODE 比較）, Lemma 3.12（Hölder）, Cor 3.13/3.14（1 変数最適化・凸性）, Eq-3.93, Lemma 3.5 の上界（正弦和）, Thm 3.9/Cor 3.10 の会計 |
+| 複素解析・作用素値（難度 3–5） | Thm 2.1 の (2.12)(2.13)（微分）, Eq-3.6（除去可能特異点）, Eq-3.57 と Lemma 3.6（輪郭変形）, Def 3.7, Cor 3.15/3.16（最大値原理）, Cor 3.19, 各モジュールの解析データ（Cayley, HamSim (5.38), Sign (B.8), FPAA (B.4)）, Lemma B.1（Cauchy 導関数評価）, Prop 5.5 |
+| 外部の大定理に依存（形式化対象外を推奨） | Thm 4.1（Andô, Kaijser–Varopoulos）, Prop 4.6（Artin）, Eq-4.4（Fejér–Riesz; QSVT 側と共有なら可）, Prop A.7（H¹ 因数分解）, Prop B.2（Legendre/Bessel 漸近）, Lemma 5.7・Eq-B.15（行列 lossless 因数分解）, Thm A.5/Lemma A.6（可逆算術回路）, Eq-B.54（MPS・GQSP） |
+
+### 5.5 解析的 clock shaping の最小クリーン命題（最初の形式化ターゲット）
+
+Lemma 3.6 は「(a) 有限和の組合せ」と「(b) 平滑化 tail の輪郭評価」に分離でき、(a) は完全に代数的である。
+
+- **S1（transient ⟹ clock 誤差; 代数）**: `G†G = I`、有限 clock 重み、`c_N = 0` ⟹
+  `‖G − Σ_{n<N} c_nG_n‖ ≤ abs(1 − c_0) + Σ_{n<N} abs(c_n − c_{n+1})‖K_n‖`（(3.14) の系）。
+- **S2（平滑化窓の組合せ還元; 代数）**: 基窓 c⁰（有限台、[0,D] で 1、値 [0,1]、外側単調）、確率分布 p on {0..d}、
+  `c_n = Σ_v p_v c⁰_{n − s − v}` ⟹ `‖Σ c_nG_n − G‖ ≤ sup_{J ≥ u+1} ‖G − Σ_v p_v Y_{J+v−1}‖ + sup_{J + d ≤ ℓ} ‖Σ_v p_v Y_{J+v−1}‖`
+  （(3.53)–(3.55) から）。右辺 2 項を「平滑化 tail 汎関数 T_+(J), T_−(J)」と名付け、Def 3.7 を「T_± の上界」として抽象化すれば
+  Thm 3.8 は純組合せ（＋ S4, S5）になる。
+- **S3（Cauchy ⟹ 平滑化 tail 評価; 解析の核心）**: (3.45) の仮定と箱平均分布で `‖T_±(J)‖ ≤ (3/2)M_loc β^{q}`。
+  形式化上の工夫（本調査の提案）:
+  (i) 上側は `G − Y_{J−1} = G·[z^{J−1}]K(z)`（K は z=1 で除去可能に正則）を使えば被積分関数に極がなく**留数定理が不要**；
+  下側の C_− 迂回も 1 を含まないので留数不要。
+  (ii) 迂回路を円 `abs(z−1) = ρ` ではなく**対数座標の長方形** `{e^{u+iv} : log r ≤ u ≤ u_0, abs(v) ≤ θ}`（環状扇形）にとれば、
+  円周上の弧との差は s = log z 平面の長方形境界になり、Mathlib の長方形 Cauchy–Goursat
+  （`Complex.integral_boundary_rect_eq_zero_of_differentiableOn` 系）と円周積分の環状領域独立性で処理できる。
+  (iii) 応用側の解析評価はもともと対数座標で証明されている（(5.38), (5.52), (B.78), App C (C.1)(C.2)）ので、Thm 3.9 の仮定を
+  「対数正方形 `abs(Re log z), abs(Im log z) ≤ s` 上の評価」で述べ直すのが自然（円板版は定数倍の損失で従う）。
+- **S4（箱型 flat clock; 初等）**: g = 長さ L の一様、h = 長さ L + D の一様（正規化）、`α = sqrt(1 + D/L)` とすると rank-1 の
+  `X = α h g†` は `c_n(X) = 1 (0 ≤ n ≤ D)`、値 [0,1]、台台形で単調、`‖X‖_* = α`。δ = 1（正規化 2、Cor 3.10・Thm 1.1 の warm-up 用途）には
+  これで十分で、Lemma 3.5（最適性・正弦和・log-concavity）を回避できる。一般 δ では horizon が `w + O((…)/δ)`（最適は `/√δ`）。
+- **S5（正平滑化は正規化を増やさない; 自明）**: (3.65)。因数分解 clock なら三角不等式 1 行。
+- **S6（組立て）**: S2 + S3 + S4/S5 + Thm 2.2 + Thm 2.3（因数分解方向）⟹ Thm 3.8/3.9 の明示 horizon 版 (3.72)/(3.74b)。
+- **S7（大域半径版; 輪郭変形不要）**: `abs z < R`（R > 1）で解析かつ `‖G(z)‖ ≤ M_R` ⟹ 円周 Cauchy 評価
+  `‖G_n‖ ≤ M_R R^{−n}`、`‖G − Y_n‖ ≤ M_R R^{−n}/(R − 1)`（`Σ‖G_n‖ < ∞` なので Abel 規約も不要）⟹ Eq-3.118/S1 で clock 誤差。
+  FPAA（(B.4): 極半径 c^{−1/2}）や gap 付き AP1 に適用可能。ただし HamSim・Cayley・Sign は特異点/分岐点が単位円上にあるので
+  S3 が本質的に必要。
+- **S8（radial 成長; ODE）**: Lemma 3.11。応用ごとの「Hermitian 部の評価 ⟹ (3.76)」を共通化する。
+- **S9（遅延スライスの近傍）**: (3.98) `abs(z^r − 1) ≤ r·abs(z−1)(1 + abs(z−1))^{r−1}`。Cor 3.15 の基礎。
+
+### 5.6 提案するファイル配置（本表の Lean home）
+
+```
+MQSP/Basic/BlockOp.lean        -- P ⊕ L 上の 2×2 ブロック作用素、ユニタリ恒等式
+MQSP/Basic/Register.lean       -- Fin N → P (PiLp 2)、シフト、下三角 Toeplitz
+MQSP/Oracle/Signature.lean     -- oracle 型・port・多重度・promise（G1, C2）
+MQSP/Oracle/BlockEncoding.lean -- Be[A/λ]、Π_in/Π_out、(4.1), (4.82)
+MQSP/Module/Junction.lean      -- Module、Prop 5.1
+MQSP/Transfer/SteadyState.lean -- 定常解（擬似逆）、(2.7), (2.10)
+MQSP/Transfer/Kernel.lean      -- Thm 2.1 (2.11)(2.14)(2.16)
+MQSP/Transfer/Analytic.lean    -- F(z), Γ(z), Neumann (2.3), Abel 規約 (2.5), 微分 (2.12)
+MQSP/Transfer/Delay.lean       -- G(z) = F(z^r), バッファ化実現 (3.24), (2.13), (2.18)
+MQSP/Transfer/Coefficients.lean-- G_n, (2.21)
+MQSP/Compile/ToeplitzLift.lean -- Thm 2.2, (2.26)
+MQSP/Compile/Clock.lean        -- 因数分解 clock, c_n, L_X, Thm 2.3, Lemma 2.4, (2.34), (3.65), (B.24)
+MQSP/Compile/Correction.lean   -- Thm 3.18
+MQSP/Compile/RankOne.lean      -- Prop A.7 (optional)
+MQSP/Shaping/Transient.lean    -- (3.5)–(3.16), (1.13)
+MQSP/Shaping/Uniform.lean      -- (3.17), Thm 3.2, Lemma 3.3, Prop 3.4
+MQSP/Shaping/FlatClock.lean    -- 箱型 clock (S4), Lemma 3.5
+MQSP/Shaping/Smoothing.lean    -- (3.54), Def 3.7, Lemma 3.6
+MQSP/Shaping/Analytic.lean     -- Thm 3.8, 3.9, Cor 3.10, 3.19, Thm 1.1
+MQSP/Shaping/Delays.lean       -- Lemma 3.12, Cor 3.13–3.16, (3.93)
+MQSP/Shaping/Stability.lean    -- Prop 3.17
+MQSP/Shaping/Frontier.lean     -- Cor 3.1, (A.23)
+MQSP/Shaping/Refinements.lean  -- (3.118)
+MQSP/Analysis/Contour.lean     -- 作用素値 Cauchy 係数公式、対数長方形輪郭 (S3), (3.57)
+MQSP/Analysis/RadialGrowth.lean-- Lemma 3.11
+MQSP/Achievability/{QueryCoordinates, Free, CausalGram, FiniteHistory, Realization, Accretive, SchurAgler, Completion}.lean
+MQSP/Connect/{Rules, Accounting, Analytic}.lean
+MQSP/Library/{Query, AP1, Cayley, CayleyJunction, WeightedCayley, Access, HamSim, AverageCost, FPAA, OAA, Sign, Threshold, Reciprocal, StatePrep}.lean
+MQSP/Library/Exp/{SchurPrefix, Spectral, Pade, Finite}.lean
+MQSP/Resource/{Convention, Weights, ErrorBudget, OAA, Routing, Modules, Cascade}.lean
+```
+
+兄弟ファイル `mqsp-applications.md` は `MQSP/Core/…`, `MQSP/Clock/Kernel.lean`, `MQSP/Aux/…` を使っているので統合時に
+`MQSP/Compile/Clock.lean ↔ MQSP/Clock/…` 等を揃えること。
+
+### 5.7 Mathlib で不足しそうなもの（要確認を含む）
+
+- **核ノルム（Schatten-1）・SVD**: 一般の行列/有限次元作用素のトレースノルムと SVD は整備が薄い（調査者の知識では未整備または限定的）。
+  推奨: 核ノルムを `inf{Σ‖h_ℓ‖‖g_ℓ‖ : X = Σ h_ℓ g_ℓ†}`（因数分解ノルム）で定義し、解析 clock（rank ≤ 6）は因数分解を直接与える。
+  SVD/トレース双対が要るのは Thm 2.3(⇐ 一般), Lemma 3.5 の下界, Cor 3.1, Thm 4.8, (A.23) のみ。
+- **作用素値正則関数の輪郭積分**: 円周積分・Cauchy 係数評価（`HasFPowerSeriesOnBall`, `cauchyPowerSeries`）と長方形の
+  Cauchy–Goursat は Banach 値で存在。一般輪郭（円板 ∪ 小円板の境界）の Cauchy 定理・留数定理・ホモトピー不変性は不足 → §5.5 S3 の回避策。
+- **多変数（多重円板）正則性**: `Fin m → ℂ` 上の解析性はあるが、係数 `F_n (n ∈ ℕ^m)` の抽出・偏微分の取り回しは重い → 遅延スライス 1 変数に集約。
+- **Abel 極限**: 解析接続仮定下では連続性で足りる（Abel の定理は不要）。Mathlib の Abel 定理（Stolz 錐）はスカラー値。
+- **Fejér–Riesz、Artin（Hilbert 17）、Andô 膨張、Kaijser–Varopoulos、H¹ Riesz 因数分解、行列 Blaschke–Potapov 因数分解**: いずれも無し。
+- **行列指数のノルム評価** `‖e^B‖ ≤ e^{λ_max((B+B†)/2)}`（非可換持ち上げで多用）: Mathlib に直接は無い見込み（Lemma 3.11 型 ODE で自前証明可）。
+- **ユニタリ拡張**: 有限次元で部分等長（span 上の等長）を全空間ユニタリに拡張する補題（Thm 4.3, 4.7, Eq-4.82）。`LinearIsometry` と
+  直交補空間の次元一致から構成可能だが既製 API は要確認。
+- **Loewner 順序と作用素ノルムの関係**（`aI ⪯ W ⪯ wI`、`Re M ⪰ 0`）: `ContinuousLinearMap.IsPositive` / `Matrix.PosSemidef` あり、橋渡しの補題群が必要。
+
+### 5.8 範囲外（§6–§8, App C–E）が再利用するコア結果
+
+本文中の参照回数（テキスト検索による概数）: Def A.1 (10), Lemma 5.2 (9), Thm 2.2 (8), Thm A.5 (7), Thm 3.9 (6), Lemma A.4 (4),
+Thm 3.2 (3), Thm 5.6 (3), Lemma 5.7 (3), Lemma B.3 (3), Thm 2.1 (2), Thm 2.3 (2), Lemma 2.4 (2), Cor 3.1 (2), Lemma 3.6 (2),
+Cor 3.10 (2), Lemma 3.12 (2), Thm 3.18 (2), Lemma B.1 (2), Eq-5.15 (2), Prop 3.17 / Lemma 3.3 / Lemma 3.11 / Prop 5.1 / Cor 5.8 /
+Lemma A.2 / Lemma A.3 (各 1)。§4 の定理群, Thm 1.1, Lemma 3.5, Thm 3.8, Cor 3.13–3.16, 3.19, Prop 5.3/5.5, Prop A.7, Prop B.2,
+Thm B.4, Cor B.5 は後続で直接参照されない（ただし Thm 3.9 経由で Lemma 3.5/3.6・Thm 3.8 は間接使用）。主な使用箇所: §6.1
+（Thm 6.1–6.4: Lemma 5.2, Thm 2.2, 3.9, 5.6, Lemma 3.6, 3.12, B.3, Prop 3.17, Lemma A.4）、§6.2（Lemma B.1, 3.12, Cor 5.8）、
+§6.6（Thm 3.2, 3.9, Eq-5.15）、§7（Thm 2.2, 3.9, Lemma A.4, 5.7）、§8（Thm 2.2, 2.3, Lemma 2.4, Thm 3.18, A.5, Lemma A.3）、
+App C（Lemma 3.6, 3.11, Thm 2.3, 3.9, Lemma A.2, B.1, B.3）、App D（Thm 3.2, Lemma 3.3, Thm 2.2, 3.9, Lemma 5.2, 5.7, Thm A.5）。
+
+### 5.9 気付いた点・注意
+
+- 論文の著者注（abstract 脚注）に「LLM が Sections 2, 3 …の MQSP 形式化の Lean 4 証明を生成した」とある（テキストは途中で切れている）。
+  既存の Lean 成果物がある可能性が高いので、着手前に所在（補足資料・リポジトリ）を確認すべき。
+- Cor 5.8（§5）と Cor B.5（App B）は §6 の Thm 6.1（および App C.1.1 の遅延構成）に**前方依存**している。コア層の切り出しでは
+  これらを「応用層」に移すのが整合的。
+- Thm 1.1 は Thm 3.9 の再掲だが、対数の中身が `M_loc/ϵ`（3.9 は `3M_loc/ϵ_clk`）、`ϵ ≤ min{δ, 1/4}` の制限付き。Lean では 3.9 を主とし 1.1 を系に。
+- 抽出テキストで複素共役（(2.11) の `conj(w_j)`, (2.32) の `conj(h)`, (4.43), Lemma 5.7 の `q^#`）・天井関数（(3.46) の M_sm）・一部行列
+  （Sign の境界系 S）が崩れている。Lean 化前に原 PDF で確認が必要。
+- 「解析接続が閉円板を通る」「promise 上一様」「既知部分は O 非依存」という 3 つの量化が全定理に潜在しており、Lean の文の形
+  （∀ O ∈ Promise の位置、clock が O を引数に取らないこと）で明示しないと容易に弱い／誤った主張になる。
+- Thm 2.2 の query 計上は「1 tick に port 全区画へ `I_{r_j} ⊗ O_j` を当てて 1 回」（コピーラベルは spectator）。この規約を
+  Def A.1 の「1 query = controlled unitary 1 起動」と整合させる定義が必要。
