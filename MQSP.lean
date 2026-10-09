@@ -39,3 +39,4 @@ import MQSP.Lang.Prog
 import MQSP.Compose.Delay
 import MQSP.CPE.Stitch
 import MQSP.Algorithms.HamSim
+import MQSP.QSVT.Hermitian
