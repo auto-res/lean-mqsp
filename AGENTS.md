@@ -64,6 +64,15 @@ the theorem inventories of the three papers are `dev/inventory/*.md`, the dated 
 - `simp`/`rw` do not see through `instHSpaceSumElim` (ports indexed by `ι₁ ⊕ ι₂`): state helper
   lemmas at the plain type `K₁ i` and close with `exact`/`change`.
 - `lake env lean` ignores lakefile linter options; some warnings only appear under `lake build`.
+- Theorems about `Prog` denotations: do not state a program-level theorem by `exact`-ing a
+  junction-level theorem (the instance `Den.inst (denote p)` and `Sum.elim … (inr i)` vs `K i`
+  unify only by deep unfolding → `maximum recursion depth`); prove through the language's own
+  compositional lemmas (`steady_series`, `steady_subst`, …) or `dsimp only [steady, denote]`.
+- Never define a notation of the form `p "[" … "]"`: it clashes with array indexing `xs[i]!`.
+- `evalExpr` is unsafe; meta code that inspects programs (`#mqsp_info`) walks the `Expr` and
+  counts `Sum`/`Fin`/`Unit` index types structurally instead of evaluating.
+- Rall's rounding promise must use the rounding convention for bits
+  (`⌊x·2^(k+1) + 1/2⌋ % 2`); the floor convention is inconsistent with the promise.
 
 ## Reporting
 
