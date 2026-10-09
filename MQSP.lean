@@ -54,3 +54,4 @@ import MQSP.Resource.Hybrid
 import MQSP.Modules.PrepQuery
 import MQSP.Modules.AP1
 import MQSP.Compose.Close
+import MQSP.Algorithms.FPAA

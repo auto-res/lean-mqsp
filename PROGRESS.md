@@ -20,7 +20,9 @@
   重み付き遅延配分（Lemma 3.12 の Cauchy–Schwarz 形，Eq 1.18）．
 - **言語**: `withDelay` 構成子，`#mqsp_info`（ネットワーク構造とポート数を表示），例プログラム（`Lang/Examples.lean`：
   Cayley の 2 段直列，QSP chain，入れ子代入，HamSim ネットワーク），program-level の end-to-end compile 定理．
-- 規模: Lean 約 12,600 行，`lake build`/`lake test` 成功，公理は標準 3 つ，sorry なし．
+- **追加（M4 末）**: Close 規則（§5.2 の接続規則が揃った），AP1（Blaschke），FPAA tap（定常値 1，catalyst，重み），
+  PreparationQuery，hybrid argument．FPAA の有限 N 残差評価は under-damped 条件が必要（無条件の主張は偽；反例を記録）．
+- 規模: Lean 約 13,500 行，`lake build`/`lake test` 成功，公理は標準 3 つ，sorry なし．
 - 未着手/今後: 解析的 clock shaping（Thm 3.9，対数精度），Close 規則，FPAA の有限 N 残差評価（Schur 形），
   CPE Thm 12 の反復全体（Δ 依存位相配線），時変 causal lift（Prop 8.1），Exp の有限 Schur 実現（Thm 5.6）．
 

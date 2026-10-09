@@ -35,7 +35,7 @@
 - COMP-3. Wire（前後の既知ユニタリ）: `F V`, `V F` — `Compose/Wire.lean` ✅
 - COMP-4. DirectSum: `F₁ ⊕ F₂`，`W₁ ⊕ W₂` — `Compose/DirectSum.lean` ✅
 - COMP-5. Spectator: `1_R ⊗ F` — `Compose/Spectator.lean` ✅
-- COMP-6. Close（内部フィードバック，Schur 補元 (4.98)–(4.101)，正則性仮定） — ⬜
+- COMP-6. Close（public sector を既知ユニタリで閉じる；steady = Schur 補元 `F_pp + F_pe V (1 − F_ee V)⁻¹ F_ep`，正則性） — `Compose/Close.lean` ✅
 - COMP-7. Substitute（module の port への代入）: steady = 外側の steady に `F_B` を代入，catalyst/重みの入れ子 — `Compose/Substitute.lean` ✅
 - COMP-8. Inverse（`S†`, `O†` ⟹ `F†`，`Γ_inv = QΓF†`） — `Compose/Inverse.lean` ✅；Project（`Vout† F Vin`），LCU（`|+⟩` flag で `(F₁+F₂)/2`） — `Compose/Project.lean` ✅；Delay（`withDelay`） — `Compose/Delay.lean` ✅
 - COMP-9. ポートの併合（同一 oracle の複数コピーを 1 ポートに；クエリ数の勘定） — ⬜
@@ -64,13 +64,14 @@
 - RES-1. `CostModel`（ポート→oracle 型，コスト），`weightedCost`，`invocations` — `Resource/Cost.lean` ✅
 - RES-2. 正規化と近似誤差（Lemma A.2），条件付き状態（Lemma A.3），OAA のブロック恒等式と誤差（Lemma A.4） — `Resource/Approx.lean` ✅；誤差予算 (A.13) — ⬜
 - RES-3. 重み付き遅延配分（Lemma 3.12 の Cauchy–Schwarz 形，Eq 1.18） — `Resource/Allocation.lean` ✅
+- RES-4. hybrid argument（縮小作用素の合成誤差は和，`q` 回実行で `qη`；Eq A.13） — `Resource/Hybrid.lean` ✅
 
 ## LIB（`MQSP/Modules`，mQSP §5.1/5.3）
 
 - LIB-0. chain junction（有限 query 回路 = module；`D` 冪零，steady = 回路，`G` は遅延 `d` に集中，重み 1/port） — `Modules/Chain.lean` ✅
 - LIB-1. Query（`F = O`） — `Modules/Query.lean` ✅；Cayley（Eq 1.24/5.35，`F = (1−iA)(1+iA)⁻¹`，重み `2/(1+x²)`） — `Modules/Cayley.lean` ✅；WeightedCayley（Lemma 5.2，`CayleyData.steady_eq`） — `Modules/WeightedCayley.lean` ✅；AP1 — ⬜
-- LIB-2. ReflectionWalk (5.13)，HermitianDilation (5.12) — `Modules/Signals.lean` ✅；PreparationQuery (5.14) — ⬜
-- LIB-3. FPAA tap (1.38): 定常値 1，catalyst (1.39)，重み — `Algorithms/FPAA.lean` 🔶；有限 N 残差評価 (1.42a) — ⬜；AP1（Blaschke，Eq 4.66–4.70） — `Modules/AP1.lean` 🔶
+- LIB-2. ReflectionWalk (5.13)，HermitianDilation (5.12) — `Modules/Signals.lean` ✅；PreparationQuery (5.14) — `Modules/PrepQuery.lean` ✅
+- LIB-3. FPAA tap (1.38): 定常値 1，catalyst (1.39)，重み `(1−c)/((1+c)sin²θ)` — `Algorithms/FPAA.lean` ✅；有限 N 残差評価 (1.42a) は under-damped 条件 `(1+c)²cos²2θ ≤ 4c` が必要（無条件では反例あり） — ⬜；AP1（Blaschke，Eq 4.66–4.70，gap 評価） — `Modules/AP1.lean` ✅
 - LIB-4. Sign lattice (5.27)–(5.30)，Threshold (5.33) — ⬜
 - LIB-5. Exp の仕様 `IsExpModule` と HamSim = Exp[WeightedCayley] の理想定常値 `exp(−τM)`（`hamSim_steady`），クエリ数 — `Algorithms/HamSim.lean` ✅；有限 Schur 実現（Thm 5.6 (i)），Prop 5.5 — ⬜
 - LIB-6. Reciprocal（Lemma 5.7），StatePrep（Cor 5.8） — ⬜
