@@ -34,3 +34,6 @@ import MQSP.Core.Spectral
 import MQSP.Poly.Approx
 import MQSP.CPE.Signal
 import MQSP.Modules.WeightedCayley
+import MQSP.Clock.Uniform
+import MQSP.Lang.Prog
+import MQSP.Compose.Delay

@@ -107,3 +107,17 @@ info: 'MQSP.Spectral.norm_polyCalc_sub_cfc_le' depends on axioms: [propext, Clas
 /-- info: 'MQSP.Poly.exists_amplifier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms MQSP.Poly.exists_amplifier
+
+/-- info: 'MQSP.Junction.isEncodingOf_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.isEncodingOf_uniform
+
+/-- info: 'MQSP.Prog.steady_subst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Prog.steady_subst
+
+/--
+info: 'MQSP.Junction.CayleyData.steady_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Junction.CayleyData.steady_eq
