@@ -15,3 +15,5 @@ import MQSP.Compose.DirectSum
 import MQSP.Compose.Inverse
 import MQSP.Compose.Spectator
 import MQSP.Clock.Transient
+import MQSP.Module.Steady
+import MQSP.Modules.Cayley

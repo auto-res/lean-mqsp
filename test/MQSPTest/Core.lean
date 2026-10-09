@@ -45,3 +45,11 @@ info: 'MQSP.Junction.steady_adj_sub_weighted' depends on axioms: [propext, Class
 -/
 #guard_msgs in
 #print axioms MQSP.Junction.steady_adj_sub_weighted
+
+/-- info: 'MQSP.Junction.isUnitary_steady₀' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.isUnitary_steady₀
+
+/-- info: 'MQSP.Junction.cayley_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.cayley_steady
