@@ -9,3 +9,9 @@ import MQSP.Compose.Wire
 import MQSP.Modules.Query
 import MQSP.Core.BlockEncoding
 import MQSP.Compile.Clock
+import MQSP.Module.Impulse
+import MQSP.Compile.Lift
+import MQSP.Compose.DirectSum
+import MQSP.Compose.Inverse
+import MQSP.Compose.Spectator
+import MQSP.Clock.Transient

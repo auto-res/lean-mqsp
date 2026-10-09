@@ -128,7 +128,7 @@ theorem adjoint_embedL_apply (k : ℕ) (m : M.Mem) :
   simp only [embedL, map_sum, ContinuousLinearMap.adjoint_comp, _root_.sum_apply,
     ContinuousLinearMap.comp_apply]
   refine Finset.sum_congr rfl (fun j _ => ?_)
-  rw [PiSum.adjoint_single, Reg.adjoint_single]
+  rw [PiSum.adjoint_single (K := fun j => Reg (M.delay j) (K j)), Reg.adjoint_single]
 
 theorem π_adjoint_embedL_apply (k : ℕ) (m : M.Mem) (j : ι) :
     M.ports.π j ((M.embedL k)† m) = Reg.proj (M.slot j k) (PiSum.proj j m) := by
@@ -292,7 +292,7 @@ theorem cell_mod (i k : ℕ) (ψ : P) (j : ι) :
   simp [cell, age]
 
 omit [DecidableEq ι] in
-theorem cell_succ_of_ne (i k : ℕ) (ψ : P) (j : ι) (s : ℕ) (hs : s < M.delay j)
+theorem cell_succ_of_ne (i k : ℕ) (hik : i ≤ k) (ψ : P) (j : ι) (s : ℕ) (hs : s < M.delay j)
     (hne : s ≠ (k + 1) % M.delay j) :
     M.cell O i (k + 1) ψ j s =
       if 0 < k + 1 ∧ M.delay j ∣ k + 1 then O j (M.cell O i k ψ j s) else M.cell O i k ψ j s := by
@@ -300,7 +300,7 @@ theorem cell_succ_of_ne (i k : ℕ) (ψ : P) (j : ι) (s : ℕ) (hs : s < M.dela
   have hm := Nat.mod_lt k (M.one_le_delay j)
   simp only [cell, age, Nat.dvd_iff_mod_eq_zero]
   rcases succ_mod_cases (k := k) (M.one_le_delay j) with ⟨h1, h2⟩ | ⟨h1, h2⟩ <;>
-  split_ifs <;> (try first | omega | rfl | simp | (congr 2; omega) | (congr 1; omega))
+  split_ifs <;> first | omega | rfl | simp | (congr 2; omega) | (congr 1; omega)
 
 omit [DecidableEq ι] in
 /-- The slot read at time `k + 1` (after the oracle at time `k + 1`). -/
@@ -312,7 +312,7 @@ theorem cell_read (i k : ℕ) (hik : i ≤ k) (ψ : P) (j : ι) :
   have hm := Nat.mod_lt k (M.one_le_delay j)
   simp only [cell, age, Nat.dvd_iff_mod_eq_zero]
   rcases succ_mod_cases (k := k) (M.one_le_delay j) with ⟨h1, h2⟩ | ⟨h1, h2⟩ <;>
-  split_ifs <;> first | omega | rfl | simp | (congr 2; omega) | (congr 1; omega)
+  split_ifs <;> first | omega | rfl | simp | (congr 2; omega)
 
 /-- Before the impulse time nothing happens. -/
 theorem liftUpTo_apply_of_le (i : Fin N) (ψ : P) :
@@ -324,7 +324,7 @@ theorem liftUpTo_apply_of_le (i : Fin N) (ψ : P) :
     have hne : (⟨n, hn⟩ : Fin N) ≠ i := fun h' => by
       have := congrArg Fin.val h'; simp only at this; omega
     rw [liftUpTo, dite_eq_left hn, ContinuousLinearMap.comp_apply,
-      M.liftUpTo_apply_of_le i ψ n (by omega), ContinuousLinearMap.comp_apply, oracleAt_inl]
+      liftUpTo_apply_of_le i ψ n (by omega), ContinuousLinearMap.comp_apply, oracleAt_inl]
     have h2 : (M.J N ⟨n, hn⟩)† (DSum.inl (Reg.single i ψ)) = 0 := by
       rw [adjoint_J_apply]; simp [Reg.proj_single_of_ne hne]
     rw [step_apply, h2]; simp
@@ -341,7 +341,8 @@ theorem liftUpTo_succ_apply (i : Fin N) (ψ : P) (k : ℕ) (hik : (i : ℕ) ≤ 
       rw [adjoint_J_apply]; simp
     have h3 : M.S (DSum.mk ψ 0) = DSum.mk (M.A ψ) (M.C ψ) := by rw [S_apply]; simp
     refine DSum.ext (Reg.ext fun o => ?_) (PiSum.ext fun j => Reg.ext fun s => ?_)
-    · rw [proj_fst_step, h2, h3, DSum.fst_mk, proj_pubState]
+    · rw [proj_fst_step, h2, h3]
+      simp only [DSum.fst_mk, proj_pubState]
       split_ifs with h4 h5 h5
       · have : o = i := Fin.ext h4
         subst this; simp
@@ -349,7 +350,9 @@ theorem liftUpTo_succ_apply (i : Fin N) (ψ : P) (k : ℕ) (hik : (i : ℕ) ≤ 
       · omega
       · have : o ≠ i := fun h' => h4 (congrArg Fin.val h')
         simp [Reg.proj_single_of_ne this]
-    · rw [proj_snd_step, h2, h3, DSum.snd_mk, proj_memState, M.cell_base O i ψ j s s.isLt]
+    · rw [proj_snd_step, h2, h3]
+      simp only [DSum.snd_mk, proj_memState]
+      rw [M.cell_base O i ψ j s s.isLt]
       split_ifs
       · simp [wr]
       · simp
@@ -381,32 +384,35 @@ theorem liftUpTo_succ_apply (i : Fin N) (ψ : P) (k : ℕ) (hik : (i : ℕ) ≤ 
       rw [hg, G_succ, gseq_succ]
       rfl
     refine DSum.ext (Reg.ext fun o => ?_) (PiSum.ext fun j => Reg.ext fun s => ?_)
-    · rw [proj_fst_step, h2, h3, DSum.fst_mk, hY, fst_oracleAt, DSum.fst_mk, proj_pubState,
-        proj_pubState]
+    · rw [proj_fst_step, h2, h3, hY, fst_oracleAt]
+      simp only [DSum.fst_mk, proj_pubState]
       split_ifs <;> first | omega | rfl | (congr 2; omega)
-    · rw [proj_snd_step, h2, h3, DSum.snd_mk, hY, proj_snd_oracleAt, DSum.snd_mk, proj_memState,
-        proj_memState]
-      split_ifs with hs
-      · rw [hs, cell_mod]; rfl
-      · exact (M.cell_succ_of_ne O i k ψ j s s.isLt hs).symm
+    · rw [proj_snd_step, h2, h3, hY, proj_snd_oracleAt]
+      simp only [DSum.snd_mk, proj_memState]
+      by_cases hs : (s : ℕ) = (k + 1) % M.delay j
+      · rw [ite_eq_left hs, hs, cell_mod]; rfl
+      · rw [ite_eq_right hs]
+        exact (M.cell_succ_of_ne O i k hik ψ j s s.isLt hs).symm
 
 /-- COMP-C1 (mQSP Thm 2.2). The public block of the lift is the lower-triangular Toeplitz
 matrix of the impulse response: entry `(o, i)` is `G (o - i)` for `i ≤ o` and `0` otherwise. -/
 theorem toeplitz_block (hO : O.IsUnitary) (i o : Fin N) :
     Reg.proj o ∘L DSum.fst ∘L M.lift O N ∘L DSum.inl ∘L Reg.single i =
       if (i : ℕ) ≤ o then M.G O (o - i) else 0 := by
+  -- the block identity holds for arbitrary oracles; `hO` is kept for the statement's API
+  have _ := hO
   refine ContinuousLinearMap.ext (fun ψ => ?_)
+  have hi := i.isLt
+  have ho := o.isLt
   have h := M.liftUpTo_succ_apply O N i ψ (N - 1) (by omega) (by omega)
   rw [Nat.sub_add_cancel (by omega)] at h
   simp only [ContinuousLinearMap.comp_apply, lift, h, DSum.fst_mk, proj_pubState]
-  split_ifs with h1 h2 h2
-  · rfl
-  · omega
-  · omega
-  · rfl
+  split_ifs <;> first | rfl | omega
 
+omit [DecidableEq ι] in
 /-- mQSP Eq. (2.26): every impulse-response coefficient is a contraction. -/
 theorem norm_G_le_one (hO : O.IsUnitary) (n : ℕ) : ‖M.G O n‖ ≤ 1 := by
+  classical
   have h := M.toeplitz_block O (n + 1) hO 0 (Fin.last n)
   rw [ite_eq_left (by simp), Fin.val_last, Fin.val_zero, Nat.sub_zero] at h
   rw [← h]
