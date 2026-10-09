@@ -37,3 +37,4 @@ import MQSP.Modules.WeightedCayley
 import MQSP.Clock.Uniform
 import MQSP.Lang.Prog
 import MQSP.Compose.Delay
+import MQSP.CPE.Stitch
