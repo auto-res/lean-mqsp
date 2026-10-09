@@ -53,3 +53,21 @@ info: 'MQSP.Junction.steady_adj_sub_weighted' depends on axioms: [propext, Class
 /-- info: 'MQSP.Junction.cayley_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms MQSP.Junction.cayley_steady
+
+/-- info: 'MQSP.QSVT.proj_UΦ_proj_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.proj_UΦ_proj_odd
+
+/-- info: 'MQSP.QSVT.proj_UΦ_proj_even' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.proj_UΦ_proj_even
+
+/-- info: 'MQSP.Signals.blk_reflWalk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Signals.blk_reflWalk
+
+/--
+info: 'MQSP.Junction.norm_G_le_of_partial_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms MQSP.Junction.norm_G_le_of_partial_bound

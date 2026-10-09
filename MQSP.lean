@@ -17,3 +17,6 @@ import MQSP.Compose.Spectator
 import MQSP.Clock.Transient
 import MQSP.Module.Steady
 import MQSP.Modules.Cayley
+import MQSP.QSVT.Core
+import MQSP.Modules.Signals
+import MQSP.Clock.Analytic
