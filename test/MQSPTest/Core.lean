@@ -135,3 +135,7 @@ info: 'MQSP.QSVT.norm_average_sub_cfc_le_odd' depends on axioms: [propext, Class
 /-- info: 'MQSP.Resource.oaa_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in
 #print axioms MQSP.Resource.oaa_block
+
+/-- info: 'MQSP.CPE.readout_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.CPE.readout_one

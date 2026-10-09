@@ -33,7 +33,7 @@ p, q ::= prim M                      -- a unitary junction (Prop 5.1); library m
        | p ⊕ q                       -- DirectSum
        | spectator n p               -- Spectator register `Fin n`
        | p⁻¹                         -- Inverse  (reversed system, inverse oracles)
-       | p[j ≔ q]                    -- Substitute q for the oracle at port j of p
+       | p ⇐[j] q                    -- Substitute q for the oracle at port j of p
 ```
 
 Semantics of a program on an oracle tuple `O` for its ports: steady value
@@ -185,7 +185,7 @@ def describe : {P : Type u} → [HSpace P] → {pf : PortFamily} → Prog P pf �
   | _, _, _, dsum p q => s!"({describe p} ⊕ {describe q})"
   | _, _, _, spectator n p => s!"(spectator {n} {describe p})"
   | _, _, _, inverse p => s!"({describe p})⁻¹"
-  | _, _, _, subst p _ q => s!"({describe p})[_ ≔ {describe q}]"
+  | _, _, _, subst p _ q => s!"({describe p} ⇐[_] {describe q})"
 
 /-! ### Notation -/
 
@@ -195,8 +195,8 @@ def describe : {P : Type u} → [HSpace P] → {pf : PortFamily} → Prog P pf �
 notation:70 V " ◁[" hV "] " p:70 => Prog.wireBefore V hV p
 /-- `p ▷ V` with a unitarity proof: `Prog.wireAfter V hV p`. -/
 notation:70 p:70 " ▷[" hV "] " V => Prog.wireAfter V hV p
-/-- Substitution `p[j ≔ q]`. -/
-notation:max p "[" j " ≔ " q "]" => Prog.subst p j q
+/-- Substitution `p ⇐[j] q`: feed port `j` of `p` with the program `q`. -/
+notation:70 p:70 " ⇐[" j "] " q:71 => Prog.subst p j q
 
 /-! ### Compositional semantics (LANG-1) -/
 
@@ -261,7 +261,7 @@ theorem steady_inverse (p : Prog P pf) {O : Oracles pf} (hO : O.IsUnitary) (h : 
 theorem steady_subst {pf' : PortFamily.{u}} (p : Prog P pf) (j : pf.ι) (q : Prog (pf.K j) pf')
     {O : Oracles (pf.sum pf')} (hid : O.left j = 1) (hq : IsRegular q O.right)
     (hp : IsRegular p (Function.update O.left j (steady q O.right))) :
-    steady (p[j ≔ q]) O = steady p (Function.update O.left j (steady q O.right)) :=
+    steady (p ⇐[j] q) O = steady p (Function.update O.left j (steady q O.right)) :=
   Junction.subst_steady _ j _ hid hq hp
 
 /-- Series composition is thrifty: the weight of a port of `q` is evaluated on the state

@@ -21,3 +21,17 @@ example : numPorts (spectator 2 (cayley ℂ) ;; inverse (query (Reg 2 ℂ))) = 2
 #check @MQSP.Prog.steady_series
 #check @MQSP.Prog.steady_subst
 #check @MQSP.Prog.toeplitz_block
+
+/--
+info: network: ((spectator 2 prim[1 ports]) ;; (prim[1 ports])⁻¹)
+ports: 2
+-/
+#guard_msgs in
+#mqsp_info (spectator 2 (cayley ℂ) ;; inverse (query (Reg 2 ℂ)))
+
+/--
+info: network: (prim[1 ports] ⇐[_] (prim[1 ports])⁻¹)
+ports: 2
+-/
+#guard_msgs in
+#mqsp_info (Examples.nested ℂ)

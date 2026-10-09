@@ -73,7 +73,7 @@ theorem qspProg_weight {H : Type u} [HSpace H] {U Pr Pr' : H →L[ℂ] H} (hU : 
 /-- The Cayley module with its oracle implemented by the inverse of a direct query. -/
 noncomputable def nested (E : Type u) [HSpace E] :
     Prog E ((PortFamily.one (Reg 2 E)).sum (PortFamily.one (Reg 2 E))) :=
-  (cayley E)[() ≔ inverse (query (Reg 2 E))]
+  cayley E ⇐[()] inverse (query (Reg 2 E))
 
 /-- The nested program's steady value is the Cayley transform of `O†` (here `O† = O`). -/
 theorem nested_steady {O : Reg 2 E →L[ℂ] Reg 2 E} (hO : Junction.IsSelfInverse O)

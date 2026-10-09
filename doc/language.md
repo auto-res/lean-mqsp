@@ -26,7 +26,7 @@ open MQSP MQSP.Prog
 | `p ⊕ₚ q` | DirectSum（直交する分岐）|
 | `spectator n p` | レジスタ `Fin n` をテンソル |
 | `inverse p` | 逆ネットワーク（`S†`，oracle は `Oⱼ†`）|
-| `p[j ≔ q]` | Substitute: `p` のポート `j` の oracle を `q` で実装（`q` の public 空間は `pf.K j`）|
+| `p ⇐[j] q` | Substitute: `p` のポート `j` の oracle を `q` で実装（`q` の public 空間は `pf.K j`）|
 
 ポート族は `PortFamily.one E`（1 ポート），`pf₁.sum pf₂`（Series/DirectSum/Substitute の結果），
 `pf.reg n`（spectator），`PortFamily.chain H d` で作られます．
@@ -48,8 +48,16 @@ steady (p ;; q) O = steady q O.right ∘L steady p O.left           -- steady_se
 steady (p ⊕ₚ q) O = block (steady p O.left) 0 0 (steady q O.right)  -- steady_dsum
 steady (spectator n p) (reg n O) = Reg.map (steady p O)             -- steady_spectator
 steady (inverse p) (inv' O) = (steady p O)†                          -- steady_inverse
-steady (p[j ≔ q]) O = steady p (update O.left j (steady q O.right)) -- steady_subst
+steady (p ⇐[j] q) O = steady p (update O.left j (steady q O.right)) -- steady_subst
 weight (p ;; q) O (inr j) ψ = weight q O.right j (steady p O.left ψ) -- weight_series_inr（thrifty）
+```
+
+`#mqsp_info p` はプログラムの構造とポート数を表示します（`MQSP/Lang/Info.lean`）:
+
+```lean
+#mqsp_info (spectator 2 (cayley ℂ) ;; inverse (query (Reg 2 ℂ)))
+-- network: ((spectator 2 prim[1 ports]) ;; (prim[1 ports])⁻¹)
+-- ports: 2
 ```
 
 ## 3. 回路と資源

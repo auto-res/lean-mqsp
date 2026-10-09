@@ -27,7 +27,7 @@ lift M O N       -- unitary Toeplitz lift（mQSP Thm 2.2）: public ブロック
 ```
 
 接続規則 Series / Wire / DirectSum / Spectator / Inverse / Substitute / Delay / Project (LCU) に
-定常値・catalyst・重みの合成定理があり，表面言語 `MQSP.Prog`（`p ;; q`, `p ⊕ₚ q`, `p[j ≔ q]`, …）の
+定常値・catalyst・重みの合成定理があり，表面言語 `MQSP.Prog`（`p ;; q`, `p ⊕ₚ q`, `p ⇐[j] q`, …）の
 `denote` がそれらを束ねます．
 
 ## ディレクトリ
