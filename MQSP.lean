@@ -32,3 +32,5 @@ import MQSP.QSVT.Module
 import MQSP.Compile.Endpoint
 import MQSP.Core.Spectral
 import MQSP.Poly.Approx
+import MQSP.CPE.Signal
+import MQSP.Modules.WeightedCayley
