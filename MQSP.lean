@@ -24,3 +24,4 @@ import MQSP.Resource.Cost
 import MQSP.Compose.Project
 import MQSP.Module.Compare
 import MQSP.Modules.Chain
+import MQSP.Poly.Basic
