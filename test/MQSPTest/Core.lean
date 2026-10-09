@@ -121,3 +121,7 @@ info: 'MQSP.Junction.CayleyData.steady_eq' depends on axioms: [propext, Classica
 -/
 #guard_msgs in
 #print axioms MQSP.Junction.CayleyData.steady_eq
+
+/-- info: 'MQSP.Junction.hamSim_steady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Junction.hamSim_steady
