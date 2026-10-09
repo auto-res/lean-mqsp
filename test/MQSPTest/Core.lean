@@ -149,3 +149,11 @@ info: 'MQSP.QSVT.exists_phases_proj_average_proj_odd' depends on axioms: [propex
 -/
 #guard_msgs in
 #print axioms MQSP.QSVT.exists_phases_proj_average_proj_odd
+
+/-- info: 'MQSP.QSVT.exists_qsvt_approx_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.QSVT.exists_qsvt_approx_odd
+
+/-- info: 'MQSP.Resource.sq_sum_sqrt_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
+#print axioms MQSP.Resource.sq_sum_sqrt_le

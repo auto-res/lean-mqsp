@@ -35,3 +35,8 @@ ports: 2
 -/
 #guard_msgs in
 #mqsp_info (Examples.nested ℂ)
+
+-- A program with a changed query schedule: the inner structure is unchanged.
+example : describe (withDelay (fun _ => 3) (fun _ => by norm_num) (cayley ℂ)) =
+    "(delay prim[1 ports])" := by
+  decide

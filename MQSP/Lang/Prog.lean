@@ -9,6 +9,7 @@ import MQSP.Compose.DirectSum
 import MQSP.Compose.Spectator
 import MQSP.Compose.Inverse
 import MQSP.Compose.Substitute
+import MQSP.Compose.Delay
 import MQSP.Compile.Lift
 import MQSP.Clock.Uniform
 import MQSP.Modules.Query
@@ -34,6 +35,7 @@ p, q ::= prim M                      -- a unitary junction (Prop 5.1); library m
        | spectator n p               -- Spectator register `Fin n`
        | p⁻¹                         -- Inverse  (reversed system, inverse oracles)
        | p ⇐[j] q                    -- Substitute q for the oracle at port j of p
+       | withDelay r hr p            -- Delay: change the query schedule of p
 ```
 
 Semantics of a program on an oracle tuple `O` for its ports: steady value
@@ -108,6 +110,9 @@ inductive Prog : (P : Type u) → [HSpace P] → PortFamily.{u} → Type (u + 1)
   /-- Substitute `q` for the oracle at port `j` of `p` (mQSP §5.2 Substitute). -/
   | subst {P : Type u} [HSpace P] {pf pf' : PortFamily} (p : Prog P pf) (j : pf.ι)
       (q : Prog (pf.K j) pf') : Prog P (pf.sum pf')
+  /-- Change the port delays (query schedule) of `p` (mQSP §5.2 Delay). -/
+  | withDelay {P : Type u} [HSpace P] {pf : PortFamily} (r : pf.ι → ℕ) (hr : ∀ j, 1 ≤ r j)
+      (p : Prog P pf) : Prog P pf
 
 namespace Prog
 
@@ -131,6 +136,7 @@ noncomputable def denote : {P : Type u} → [HSpace P] → {pf : PortFamily} →
   | _, _, _, spectator n p => ⟨_, (denote p).M.spectator n⟩
   | _, _, _, inverse p => ⟨_, (denote p).M.inverse⟩
   | _, _, _, subst p j q => ⟨_, (denote p).M.subst j (denote q).M⟩
+  | _, _, _, withDelay r hr p => ⟨_, (denote p).M.withDelay r hr⟩
 
 variable {P : Type u} [HSpace P] {pf : PortFamily.{u}}
 
@@ -186,6 +192,7 @@ def describe : {P : Type u} → [HSpace P] → {pf : PortFamily} → Prog P pf �
   | _, _, _, spectator n p => s!"(spectator {n} {describe p})"
   | _, _, _, inverse p => s!"({describe p})⁻¹"
   | _, _, _, subst p _ q => s!"({describe p} ⇐[_] {describe q})"
+  | _, _, _, withDelay _ _ p => s!"(delay {describe p})"
 
 /-! ### Notation -/
 
@@ -263,6 +270,13 @@ theorem steady_subst {pf' : PortFamily.{u}} (p : Prog P pf) (j : pf.ι) (q : Pro
     (hp : IsRegular p (Function.update O.left j (steady q O.right))) :
     steady (p ⇐[j] q) O = steady p (Function.update O.left j (steady q O.right)) :=
   Junction.subst_steady _ j _ hid hq hp
+
+theorem steady_withDelay (r : pf.ι → ℕ) (hr : ∀ j, 1 ≤ r j) (p : Prog P pf) (O : Oracles pf) :
+    steady (withDelay r hr p) O = steady p O := rfl
+
+theorem queries_withDelay (r : pf.ι → ℕ) (hr : ∀ j, 1 ≤ r j) (p : Prog P pf) (N : ℕ) (j : pf.ι) :
+    queries (withDelay r hr p) N j = (N - 1) / r j :=
+  Junction.withDelay_queries _ r hr N j
 
 /-- Series composition is thrifty: the weight of a port of `q` is evaluated on the state
 transmitted by `p` (mQSP Eq. (5.15)). -/

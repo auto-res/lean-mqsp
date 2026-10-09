@@ -48,3 +48,5 @@ import MQSP.CPE.Readout
 import MQSP.QSVT.Phases
 import MQSP.QSP.Endpoints
 import MQSP.QSP.Perturb
+import MQSP.Resource.Allocation
+import MQSP.QSVT.Synthesis

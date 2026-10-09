@@ -5,6 +5,7 @@ Authors: shosonoda
 -/
 import MQSP.Lang.Prog
 import MQSP.QSVT.Module
+import MQSP.Algorithms.HamSim
 
 /-!
 # Example programs (LANG-1)
@@ -101,6 +102,19 @@ theorem nested_steady {O : Reg 2 E →L[ℂ] Reg 2 E} (hO : Junction.IsSelfInver
   unfold nested
   rw [steady_subst (cayley E) () (inverse (query (Reg 2 E))) rfl (hr ▸ hq)
     (by rw [hr, hupd]; exact Junction.cayley_isRegular hO), hr, hupd, steady_cayley hO]
+
+/-- The Hamiltonian-simulation network as a program: an exponential-transform module whose
+port is fed by the weighted Cayley junction, with per-oracle delays `r`
+(`MQSP/Algorithms/HamSim.lean`). -/
+noncomputable def hamSimProg {L : Type u} [HSpace L] {ι : Type} [Fintype ι] [DecidableEq ι]
+    {K : ι → Type u} [∀ i, HSpace (K i)] (Mexp : Junction E L (onePort E))
+    (cd : Junction.CayleyData E K) (r : Unit ⊕ ι → ℕ) (hr : ∀ j, 1 ≤ r j) :
+    Prog E ((PortFamily.one E).sum ⟨ι, K⟩) :=
+  withDelay r hr (prim Mexp ⇐[()] prim cd.junction)
+
+/-! The steady value of `hamSimProg` is `exp(-τ M)` and its query schedule is `⌊(N-1)/rⱼ⌋`:
+see `MQSP.Junction.hamSim_steady` and `MQSP.Junction.hamSim_queries` (stated on the denoted
+junction `(Mexp.subst () cd.junction).withDelay r hr`). -/
 
 end Examples
 

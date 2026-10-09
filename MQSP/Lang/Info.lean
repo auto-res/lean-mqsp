@@ -73,6 +73,9 @@ private partial def describeExpr (e : Expr) : MetaM String := do
   | .const ``Prog.inverse _ =>
     -- inverse {P} [HSpace P] {pf} (p)
     return s!"({← describeExpr args[3]!})⁻¹"
+  | .const ``Prog.withDelay _ =>
+    -- withDelay {P} [HSpace P] {pf} (r) (hr) (p)
+    return s!"(delay {← describeExpr args[5]!})"
   | .const ``Prog.subst _ =>
     -- subst {P} [HSpace P] {pf pf'} (p) (j) (q)
     return s!"({← describeExpr args[4]!} ⇐[_] {← describeExpr args[6]!})"
