@@ -10,6 +10,7 @@ import MQSP.Compose.Spectator
 import MQSP.Compose.Inverse
 import MQSP.Compose.Substitute
 import MQSP.Compile.Lift
+import MQSP.Clock.Uniform
 import MQSP.Modules.Query
 import MQSP.Modules.Cayley
 import MQSP.Modules.Chain
@@ -286,6 +287,17 @@ theorem toeplitz_block (p : Prog P pf) {O : Oracles pf} (hO : O.IsUnitary) (N : 
     Reg.proj o ∘L DSum.fst ∘L lift p O N ∘L DSum.inl ∘L Reg.single i =
       if (i : ℕ) ≤ o then G p O (o - i) else 0 :=
   (denote p).M.toeplitz_block O N hO i o
+
+/-- LANG-1 (end-to-end compilation, mQSP Thm 3.2). Every regular unit-delay program compiles
+with the uniform clock of horizon `N` to a circuit that encodes an operator within
+`‖Γ‖/√N` of its steady value, at normalization `1`. -/
+theorem isEncodingOf_uniform (p : Prog P pf) {O : Oracles pf} (hd : ∀ j, delay p j = 1)
+    (hO : O.IsUnitary) (h : IsRegular p O) (N : ℕ) (hN : 0 < N) :
+    IsEncodingOf (Reg.map (lift p O N)) (Clock.clockIn (Clock.box N N))
+        (Clock.clockIn (Clock.box N N)) ((denote p).M.weighted O (Junction.uniformWeights N) N) ∧
+      ‖steady p O - (denote p).M.weighted O (Junction.uniformWeights N) N‖ ≤
+        ‖(denote p).M.catalyst O‖ / Real.sqrt N :=
+  (denote p).M.isEncodingOf_uniform O hd hO h N hN
 
 end Prog
 
