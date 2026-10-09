@@ -53,6 +53,17 @@ the theorem inventories of the three papers are `dev/inventory/*.md`, the dated 
   (`Mathlib.Analysis.Complex.Liouville`). Abel limits: `Mathlib.Analysis.Complex.AbelLimit`.
 - Singular values: `LinearMap.singularValues` (`Mathlib.Analysis.InnerProductSpace.SingularValues`).
 - Neumann series: `Units.oneSub`, `NormedRing.inverse_one_sub` (needs `HasSummableGeomSeries`).
+- Renamed/deprecated: `ContinuousLinearMap.add_apply/sub_apply/zero_apply/sum_apply/smul_apply` →
+  root `add_apply`, `sub_apply`, `zero_apply`, `_root_.sum_apply`, `smul_apply`; `one_apply` →
+  `one_apply_eq_self`; `coe_sum'` → `FunLike.coe_sum`; `comp_finset_sum`/`finset_sum_comp` →
+  `comp_finsetSum`/`finsetSum_comp`; `if_pos`/`if_neg` → `ite_eq_left`/`ite_eq_right`;
+  `Set.mem_setOf_eq` → `Set.mem_ofPred_eq`; `Module.End.mul_eq_comp`.
+- `IsUnit` of an endomorphism: `ContinuousLinearMap.isUnit_iff_bijective` +
+  `LinearMap.injective_iff_surjective`; `Function.Injective ⇑(1 - T)` needs the explicit coercion.
+- `Π` is a reserved token; name projections `Pr`, `P₀`, ….
+- `simp`/`rw` do not see through `instHSpaceSumElim` (ports indexed by `ι₁ ⊕ ι₂`): state helper
+  lemmas at the plain type `K₁ i` and close with `exact`/`change`.
+- `lake env lean` ignores lakefile linter options; some warnings only appear under `lake build`.
 
 ## Reporting
 

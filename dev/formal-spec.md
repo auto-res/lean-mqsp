@@ -91,12 +91,19 @@
 - QSVT-6. 応用（Thm 27 FPAA，Thm 28 OAA，Thm 30/31 閾値，Thm 41 擬似逆，Thm 58 HamSim，…）の operator-level — ⬜
 - POLY-*. 多項式近似（Lemma 25 sign，29，35，40，57 Jacobi–Anger，59，61，65，70，Thm 63/68…） — `MQSP/Poly` ⬜
 
-## CPE（`MQSP/CPE`，Rall）— CPE 調査完了後に確定
+## CPE（`MQSP/CPE`，Rall；詳細は `dev/inventory/cpe.md`）
 
-- CPE-1. 位相信号 / エネルギー信号の block encoding — ⬜
-- CPE-2. 1 ビット抽出（符号/閾値多項式の `qsp`），確率勘定 — ⬜
-- CPE-3. coherent iteration（ビット列レジスタ，rounding promise） — ⬜
-- CPE-4. 振幅推定 — ⬜
+- CPE-0. 仕様の枠組み: rounding promise（Def 1），推定レジスタ `EstReg n = Reg (2^n)`，ビット/下位ビットの補題，
+  ベクトルレベルの近似実装述語 `ApproxImpl ε M W S`（clean ancilla / with phases / with garbage / 前条件つき部分空間） — ⬜
+- CPE-1. 位相信号の block encoding: `I` と制御 `U^{2^k}` の LCU（Hadamard test）で `(1 + e^{2πiλ})/2 = cos(πλ) e^{iπλ}`；
+  エネルギー信号は `Be[H]` から直接 — ⬜（LCU = DirectSum + Project の specialization）
+- CPE-2. 1 ビット抽出: 増幅多項式 `A_{η→δ}`（Poly-Sign の変換）を偶多項式として `qsp`（Cor 18）で適用し，
+  QSVT の補助 qubit を答えとして読む（Aux.Readout：相補振幅 `|p̃|² + |γ|² = 1`）；固有空間ごとの誤差 ⇒ 作用素誤差（Aux.Spec） — ⬜
+- CPE-3. coherent iteration（Thm 12）: stitching（Lemma 7：前条件つき近似写像の逐次合成，誤差 δ2^{−k−1}），
+  uncompute（Lemma 3/8：copy + inverse，ベクトル版 2ε），クエリ数 `2^{n−k−1}·2M` の勘定 — ⬜
+- CPE-4. エネルギー推定（Thm 15）: Jacobi–Anger の `cos` 近似（GSLW Lemma 57/59）と `A∘p_cos²`（縮尺が必要） — ⬜
+- CPE-5. 振幅推定（Thm 19/Cor 20）: block-measurement，`U_A† · CNOT · U_A` サンドイッチ恒等式 — ⬜
+- CPE-6（optional）. チャネル層（CPTP，部分トレース，トレースノルム）と Prop 18 / Cor 16, 20 の promise なし版 — ⬜
 
 ## LANG（`MQSP/Lang`）
 

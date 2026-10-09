@@ -305,6 +305,28 @@ theorem steady_of_D_eq_zero (h : M.D = 0) (O : OracleTuple K) :
     M.steady O = M.A + M.B ∘L M.Q O ∘L M.C := by
   rw [steady, catalyst_of_D_eq_zero M h]
 
+/-- In finite dimension, regularity is injectivity of `1 - D Q`. -/
+theorem isRegular_iff_injective (O : OracleTuple K) :
+    M.IsRegular O ↔ Function.Injective ⇑(1 - M.D ∘L M.Q O) := by
+  rw [IsRegular, ContinuousLinearMap.isUnit_iff_bijective]
+  refine ⟨fun h => h.1, fun h => ⟨h, ?_⟩⟩
+  exact (LinearMap.injective_iff_surjective
+    (f := ((1 - M.D ∘L M.Q O : L →L[ℂ] L) : L →ₗ[ℂ] L))).1 h
+
+/-- The catalyst is the unique solution of the fixed-point equation. -/
+theorem catalyst_unique {O : OracleTuple K} (h : M.IsRegular O) {Γ : P →L[ℂ] L}
+    (hΓ : Γ = M.C + M.D ∘L M.Q O ∘L Γ) : Γ = M.catalyst O := by
+  have key : ∀ G : P →L[ℂ] L, G = M.C + M.D ∘L M.Q O ∘L G →
+      ∀ ψ, (1 - M.D ∘L M.Q O) (G ψ) = M.C ψ := by
+    intro G hG ψ
+    have hψ := congrArg (fun T : P →L[ℂ] L => T ψ) hG
+    simp only [add_apply, ContinuousLinearMap.comp_apply] at hψ
+    rw [sub_apply, one_apply_eq_self, ContinuousLinearMap.comp_apply, sub_eq_iff_eq_add]
+    exact hψ
+  ext ψ
+  exact (M.isRegular_iff_injective O).1 h
+    ((key Γ hΓ ψ).trans (key _ (M.catalyst_eq h) ψ).symm)
+
 end Junction
 
 end MQSP

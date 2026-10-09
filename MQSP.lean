@@ -1,4 +1,11 @@
 import MQSP.Core.HSpace
 import MQSP.Core.DSum
 import MQSP.Core.PiSum
+import MQSP.Core.Reg
+import MQSP.Core.Extend
 import MQSP.Module.Defs
+import MQSP.Compose.Series
+import MQSP.Compose.Wire
+import MQSP.Modules.Query
+import MQSP.Core.BlockEncoding
+import MQSP.Compile.Clock
